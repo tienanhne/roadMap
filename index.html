@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.min.js"
+        integrity="sha512-8Y8eGK92dzouwpROIppwr+0kPauu0qqtnzZZNEF8Pat5tuRNJxJXCkbQfJ0HlUG3y1HB3z18CSKmUo7i2zcPpg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script src="./main.js"></script>
+</head>
+
+<body>
+    <div class="direction">
+        <form>
+            <div class="form-group">
+                <i class='bx bx-radio-circle-marked'></i>
+                <div class="col-xs-4">
+                    <input type="text" id="from" placeholder="Origin" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                
+                <label for="to" class="col-xs-2 control-label"><i class='bx bxs-map' ></i></label>
+                <div class="col-xs-4">
+                    <input type="text" id="to" placeholder="Destination" class="form-control">
+                </div>
+                
+            </div>
+            
+        </form>
+        <div class="btn-group">
+            <button class="btn btn-info btn-lg " onclick="calcRoute()"><i class='bx bx-run'></i></button>
+        </div>
+    </div>
+    <!-- <div class="search-container">
+        <div class="search">
+            <input type="text" id="zip-code-input" placeholder="Enter Zip" />
+            <i class="bx bx-search-alt-2" onclick="searchStores()"></i>
+        </div>
+    </div> -->
+    <!-- <div class="stores-list-container">
+        <div class="stores-list">
+            <div class="store-container">
+                <div class="store-info-container">
+                    <div class="store-address">
+                        <span>8480 Beverly Blvd</span>
+                        <span>Los Angeles, CA 90048</span>
+                    </div>
+                    <div class="store-phone-number">+92 308 1334342</div>
+                </div>
+                <div class="store-number-container">
+                    <div class="store-number">
+                        1
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div id="map"></div>
+    <!-- <div>Vị trí hiện tại: <span id="currentPosition"></span></div> -->
+    <div class="select_map">
+        <select onchange="timdiadiem(this.value)">
+            <option value="">Chọn địa điểm</option>
+            <option value="cafe">Quán cafe</option>
+            <option value="food">Quán ăn</option>
+            <option value="hospital">Bệnh viện</option>
+            <option value="bank">Ngân hàng</option>
+            <option value="atm">Cây ATM</option>
+            <option value="bus_station">Trạm xe buýt</option>
+            <option value="museum">Bảo tàng</option>
+            <option value="park">Công viên</option>
+            <option value="parking">Chỗ đỗ xe</option>
+        </select>
+    </div>
+    <!-- <div id="floating-panel">
+        <b>Mode of Travel: </b>
+        <select id="mode">
+          <option value="DRIVING">Driving</option>
+          <option value="WALKING">Walking</option>
+          <option value="BICYCLING">Bicycling</option>
+          <option value="TRANSIT">Transit</option>
+        </select>
+    </div> -->
+    <div class="weather">
+        <i class='bx bx-x'></i>
+        <div id="icon"><img id="wicon" src="" alt="Weather icon"></div>
+        <div class="cation">
+            <p class="city"></p>
+            <p class="status"></p>
+        </div>
+    </div>
+    <div class="disnal">
+        <span id="distances"></span>
+        <span id="time"></span>
+    </div>
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAet8Mk1nPvOn_AebLE5ZxXoGejOD8tPzA&libraries=places&callback=initMap">
+        </script>
+</body>
+
+</html>
