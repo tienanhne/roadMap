@@ -276,3 +276,15 @@
      border-radius: 6px;
      z-index: 100;
  }
+ .bx-map-pin{
+    font-size: 24px;
+    color: #0563af;
+ }
+ /* .bx-run{
+    background-color: #0563af;
+    color: white;
+    padding: 6px;
+    border-radius: 5px;
+    font-size: 25px;
+    cursor: pointer;
+ } */

@@ -70,13 +70,11 @@ function timduong(place) {
             display.setDirections(result)
             document.getElementById('distances').innerHTML = result.routes[0].legs[0].distance.text
             document.getElementById('time').innerHTML = result.routes[0].legs[0].duration.text
+            placeDisplay.setMap(null);
             directionsDisplay.setMap(null);
         }
     })
 }
-
-
-
 
 var directionsDisplay;
 function calcRoute() {
@@ -95,7 +93,8 @@ function calcRoute() {
             console.log("🚀 ~ file: main.js ~ line 90 ~ result", result)
             document.getElementById('distances').innerHTML = result.routes[0].legs[0].distance.text
             document.getElementById('time').innerHTML = result.routes[0].legs[0].duration.text
-            display.setMap(null)
+            placeDisplay.setMap(null);
+            display.setMap(null);
         } else {
             directionsDisplay.setDirections({ routes: [] });
             map.setCenter({ lat: lati, lng: longi });
@@ -174,7 +173,7 @@ function searchStores() {
     clearLocations();
     displayStores(foundStores);
     showStoresMarkers(foundStores);
-    //setOnClickListener();
+    setOnClickListener();
 }
 
 function clearLocations() {
@@ -209,6 +208,14 @@ function displayStores() {
         document.querySelector('.stores-list').innerHTML = storesHtml;
     }
 }
+function setOnClickListener() {
+    var storeElements = document.querySelectorAll('.store-container');
+    storeElements.forEach(function(element, index){
+      element.addEventListener('click', function(){
+        new google.maps.event.trigger(arrMarker[index], "click");
+      })
+    })
+}
 function createMarker(latlng, name, address,index) {
     var html = `
         <div class="store-info-window">
@@ -217,7 +224,7 @@ function createMarker(latlng, name, address,index) {
           </div>
           <div class="store-info-address">
             <div class="circle">
-              <i class="fas fa-location-arrow"></i>
+            <i class='bx bx-map-pin'></i>
             </div>
             ${address}
           </div>
@@ -231,6 +238,7 @@ function createMarker(latlng, name, address,index) {
     marker.addListener('click', function () {
         infowindow.setContent(html);
         infowindow.open(map, marker);
+        run_place(latlng)
     });
     arrMarker.push(marker);
 }
@@ -249,5 +257,23 @@ function showStoresMarkers(stores) {
 }
 console.log(stores)
 
-
-
+var placeDisplay;
+function run_place(latlng){
+    var placeService = new google.maps.DirectionsService();
+    if(placeDisplay) placeDisplay.setMap(null);
+    placeDisplay = new google.maps.DirectionsRenderer();
+    placeDisplay.setMap(map);
+    var req = {
+        origin: { lat: lati, lng: longi },
+        destination: latlng,
+        travelMode: "DRIVING",
+        provideRouteAlternatives: true,
+    }
+    placeService.route(req, function(result, status){
+        if(status == "OK"){
+            placeDisplay.setDirections(result);
+            display.setMap(null);
+            directionsDisplay.setMap(null);
+        }
+    })
+}
