@@ -123,6 +123,7 @@ function initMap() {
             title: "Vị trí của bạn",
             mapTypeId: "roadmap",
         })
+        searchStores();
         change(lati, longi)
 
         var options = {
