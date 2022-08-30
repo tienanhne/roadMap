@@ -162,7 +162,7 @@ function searchStores() {
     var zipCode = document.getElementById('zip-code-input').value;
     if (zipCode) {
         for (var store of stores) {
-            var postal = store.results[0].address_components[1].long_name;
+            var postal = store.results[0].address_components[0].long_name;
             console.log("🚀 ~ file: main.js ~ line 166 ~ searchStores ~ postal", postal)
             if (postal == zipCode) {
                 foundStores.push(store);
