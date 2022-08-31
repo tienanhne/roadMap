@@ -50,7 +50,6 @@
         </div>
     </div>
     <div id="map"></div>
-    <!-- <div>Vị trí hiện tại: <span id="currentPosition"></span></div> -->
     <div class="select_map">
         <select onchange="timdiadiem(this.value)">
             <option value="">Chọn địa điểm</option>
@@ -68,9 +67,10 @@
     <div id="floating-panel">
         <b>Mode of Travel: </b>
         <select id="mode">
+         <option value="" selected>Chọn PT</option>
           <option value="DRIVING">Driving</option>
-          <option value="WALKING">Walking</option>
-          <option value="BICYCLING">Bicycling</option>
+          <option value="WALKING">Đi Bộ</option>
+          <option value="BICYCLING">Đi Xe Đạp</option>
           <option value="TRANSIT">Transit</option>
         </select>
     </div>

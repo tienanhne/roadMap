@@ -70,14 +70,15 @@ function timduong(place) {
             display.setDirections(result)
             document.getElementById('distances').innerHTML = result.routes[0].legs[0].distance.text
             document.getElementById('time').innerHTML = result.routes[0].legs[0].duration.text
+            console.log(result)
             placeDisplay.setMap(null);
             directionsDisplay.setMap(null);
         }
     })
 }
-
 var directionsDisplay;
 function calcRoute() {
+    const travelModes = document.getElementById("mode").value;
     let directionsService = new google.maps.DirectionsService();
     if (directionsDisplay) directionsDisplay.setMap(null);
     directionsDisplay = new google.maps.DirectionsRenderer();
@@ -85,7 +86,7 @@ function calcRoute() {
     var request = {
         origin: document.getElementById("from").value,
         destination: document.getElementById("to").value,
-        travelMode: google.maps.TravelMode.DRIVING,
+        travelMode: google.maps.TravelMode[travelModes],
     }
     directionsService.route(request, function (result, status) {
         if (status == google.maps.DirectionsStatus.OK) {
