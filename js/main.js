@@ -230,6 +230,22 @@ function createMarker(latlng, name, address,index) {
             </div>
             ${address}
           </div>
+          <div class="store-info-address">
+            <div class="circle">
+                <i class='bx bx-time-five '></i>
+            </div>
+            <div id="time-five">
+               
+            </div>
+          </div>
+          <div class="store-info-address">
+            <div class="circle">
+            <i class='bx bx-tachometer' ></i>
+            </div>
+            <div id="kilomet">
+               
+            </div>
+          </div>
         </div>
     `
     var marker = new google.maps.Marker({
@@ -274,6 +290,8 @@ function run_place(latlng){
     placeService.route(req, function(result, status){
         if(status == "OK"){
             placeDisplay.setDirections(result);
+            document.getElementById('kilomet').innerHTML = result.routes[0].legs[0].distance.text
+            document.getElementById('time-five').innerHTML = result.routes[0].legs[0].duration.text
             display.setMap(null);
             directionsDisplay.setMap(null);
         }

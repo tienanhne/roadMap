@@ -276,7 +276,7 @@
      border-radius: 6px;
      z-index: 100;
  }
- .bx-map-pin{
+ .bx-map-pin, .bx-time-five, .bx-tachometer{
     font-size: 24px;
     color: #0563af;
  }
@@ -288,3 +288,10 @@
     font-size: 25px;
     cursor: pointer;
  } */
+ .store-container-background{
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     width: 230px;
+
+ }
