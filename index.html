@@ -14,28 +14,6 @@
 </head>
 
 <body>
-    <div class="direction">
-        <form>
-            <div class="form-group">
-                <i class='bx bx-radio-circle-marked'></i>
-                <div class="col-xs-4">
-                    <input type="text" id="from" placeholder="Origin" class="form-control" value="">
-                </div>
-            </div> 
-            <div class="form-group">
-
-                <label for="to" class="col-xs-2 control-label"><i class='bx bxs-map'></i></label>
-                <div class="col-xs-4">
-                    <input type="text" id="to" placeholder="Destination" class="form-control">
-                </div>
-
-            </div>
-
-        </form>
-        <div class="btn-group">
-            <button class="btn btn-info btn-lg " onclick="calcRoute()"><i class='bx bx-run'></i></button>
-        </div>
-    </div>
     <div class="search-container">
         <div class="search">
             <input type="text" id="zip-code-input" placeholder="Enter Zip" />
@@ -45,11 +23,53 @@
     <div class="stores-list-container">
         <div class="stores-list">
             <div class="store-container">
-               
+
             </div>
         </div>
     </div>
     <div id="map"></div>
+    <div class="tabs-map">
+        <div class="tabs-content">
+            <div class="tabs-image">
+                <img src="./khu-du-lich-buu-long-1_1634199735.jpg" alt="">
+            </div>
+            <div class="tabs-address">
+                <strong>Nha cua toi</strong>
+            </div>
+            <div class="direction">
+                <form>
+                    <div class="form-group">
+                        <i class='bx bx-radio-circle-marked'></i>
+                        <div class="col-xs-4">
+                            <input type="text" id="from" placeholder="Origin" class="form-control" value="">
+                        </div>
+                    </div> 
+                    <div class="form-group">
+        
+                        <label for="to" class="col-xs-2 control-label"><i class='bx bxs-map'></i></label>
+                        <div class="col-xs-4">
+                            <input type="text" id="to" placeholder="Destination" class="form-control">
+                        </div>
+        
+                    </div>
+        
+                </form>
+                <div id="floating-panel">
+                    <b>Mode of Travel: </b>
+                    <select id="mode">
+                     <option value="" selected>Chọn PT</option>
+                      <option value="DRIVING">Driving</option>
+                      <option value="WALKING">Đi Bộ</option>
+                      <option value="BICYCLING">Đi Xe Đạp</option>
+                      <option value="TRANSIT">Transit</option>
+                    </select>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-info btn-lg " onclick="calcRoute()"><i class='bx bx-run'></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="select_map">
         <select onchange="timdiadiem(this.value)">
             <option value="">Chọn địa điểm</option>
@@ -62,16 +82,6 @@
             <option value="museum">Bảo tàng</option>
             <option value="park">Công viên</option>
             <option value="parking">Chỗ đỗ xe</option>
-        </select>
-    </div>
-    <div id="floating-panel">
-        <b>Mode of Travel: </b>
-        <select id="mode">
-         <option value="" selected>Chọn PT</option>
-          <option value="DRIVING">Driving</option>
-          <option value="WALKING">Đi Bộ</option>
-          <option value="BICYCLING">Đi Xe Đạp</option>
-          <option value="TRANSIT">Transit</option>
         </select>
     </div>
     <div class="weather">

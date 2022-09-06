@@ -144,20 +144,6 @@ window.initMap = initMap;
 
 
 
-
-async function change(latis, longis) {
-    let apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latis}&lon=${longis}&appid=677bb5e89a8c0e450ebca93fc6296070`
-    let data = await fetch(apiURL).then(response => response.json())
-    var iconurl = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-    document.querySelector('#wicon').src = iconurl
-    document.querySelector('.city').innerHTML = data.name
-    document.querySelector('.status').innerHTML = data.weather[0].description;
-}
-
-
-
-
-
 function searchStores() {
     var foundStores = [];
     var zipCode = document.getElementById('zip-code-input').value;
@@ -206,7 +192,7 @@ function displayStores() {
                   </div>
                 </div>
               </div>
-      `
+            `
         document.querySelector('.stores-list').innerHTML = storesHtml;
     }
 }
@@ -218,7 +204,8 @@ function setOnClickListener() {
       })
     })
 }
-function createMarker(latlng, name, address,index) {
+
+function createMarker(latlng, name, address,index, image) {
     var html = `
         <div class="store-info-window">
           <div class="store-info-name">
@@ -248,15 +235,77 @@ function createMarker(latlng, name, address,index) {
           </div>
         </div>
     `
+    var html2 = `
+        <div class="store-info-window">
+          <div class="store-info-name">
+            ${name}
+          </div>
+          <div class="store-info-address">
+            <div class="circle">
+            <i class='bx bx-map-pin'></i>
+            </div>
+            ${address}
+          </div>
+        </div>
+
+    `
+    var tabsMenu = `
+        <div class="tabs-image">
+            <img src="${image}" alt="">
+        </div>
+        <div class="tabs-address">
+            <strong>${name}</strong>
+        </div>
+        <div class="direction">
+        <form>
+            <div class="form-group">
+                <i class='bx bx-radio-circle-marked'></i>
+                <div class="col-xs-4">
+                    <input type="text" id="from" placeholder="Origin" class="form-control" value="">
+                </div>
+            </div> 
+            <div class="form-group">
+
+                <label for="to" class="col-xs-2 control-label"><i class='bx bxs-map'></i></label>
+                <div class="col-xs-4">
+                    <input type="text" id="to" placeholder="Destination" class="form-control">
+                </div>
+
+            </div>
+
+        </form>
+        <div id="floating-panel">
+            <b>Mode of Travel: </b>
+            <select id="mode">
+             <option value="" selected>Chọn PT</option>
+              <option value="DRIVING">Driving</option>
+              <option value="WALKING">Đi Bộ</option>
+              <option value="BICYCLING">Đi Xe Đạp</option>
+              <option value="TRANSIT">Transit</option>
+            </select>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-info btn-lg " onclick="calcRoute()"><i class='bx bx-run'></i></button>
+        </div>
+    </div>
+    `
     var marker = new google.maps.Marker({
         map: map,
         position: latlng,
         label: index.toString(),
     });
+    marker.addListener('mouseover', function () {
+        infowindow.setContent(html2); 
+        infowindow.open(map, marker);  
+    });
+    marker.addListener('mouseout', function () {
+        infowindow.close();
+    });
     marker.addListener('click', function () {
         infowindow.setContent(html);
         infowindow.open(map, marker);
-        run_place(latlng)
+        run_place(latlng);
+        document.querySelector('.tabs-content').innerHTML = tabsMenu;
     });
     arrMarker.push(marker);
 }
@@ -268,8 +317,10 @@ function showStoresMarkers(stores) {
             store.results[0].geometry.location.lng);
         var name = store.results[0].address_components[0].long_name;
         var address = store.results[0].formatted_address;
+        var image = store.results[0].address_components[0].image;
+
         bounds.extend(latlng);
-        createMarker(latlng, name, address, index + 1)
+        createMarker(latlng, name, address, index + 1, image);
     }
     map.fitBounds(bounds);
 }
@@ -290,10 +341,19 @@ function run_place(latlng){
     placeService.route(req, function(result, status){
         if(status == "OK"){
             placeDisplay.setDirections(result);
-            document.getElementById('kilomet').innerHTML = result.routes[0].legs[0].distance.text
-            document.getElementById('time-five').innerHTML = result.routes[0].legs[0].duration.text
-            display.setMap(null);
+            document.getElementById('kilomet').innerHTML = result.routes[0].legs[0].distance.text;
+            document.getElementById('time-five').innerHTML = result.routes[0].legs[0].duration.text;
             directionsDisplay.setMap(null);
+            display.setMap(null);
         }
     })
+}
+
+async function change(latis, longis) {
+    let apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latis}&lon=${longis}&appid=677bb5e89a8c0e450ebca93fc6296070`
+    let data = await fetch(apiURL).then(response => response.json())
+    var iconurl = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+    document.querySelector('#wicon').src = iconurl
+    document.querySelector('.city').innerHTML = data.name
+    document.querySelector('.status').innerHTML = data.weather[0].description;
 }

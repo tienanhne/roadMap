@@ -14,7 +14,8 @@ let stores = [
                             "point_of_interest",
                             "rv_park",
                             "tourist_attraction"
-                        ]
+                        ],
+                        "image":"https://cdn.vntrip.vn/cam-nang/wp-content/uploads/2018/01/anh1.png",
                     },
                     {
                         "long_name": "Trảng Bom",
@@ -172,7 +173,9 @@ let stores = [
                             "park",
                             "point_of_interest",
                             "tourist_attraction"
-                        ]
+                        ],
+                        "image":"https://hotel84.com/hotel84-images/news/img1/thac-tri-an-dong-nai.jpg"
+
                     },
                     {
                         "long_name": "3XPW+QQ7",
