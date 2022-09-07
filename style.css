@@ -9,6 +9,8 @@
      height: 100%;
      margin: 0;
      padding: 0;
+     font-family: Arial, Helvetica, sans-serif;
+     box-sizing: border-box;
  }
 
  .weather {
@@ -231,7 +233,7 @@
  .direction {
     position: absolute;
      
-    left: 90px;
+    left: 30%;
      top: 5px;
      z-index: 1000;
  }
@@ -297,7 +299,7 @@
     position: absolute;
     width: 400px;
     height: 100vh;
-    background-color: #f0f0f0;
+    background-color: #fff;
     left: 0;
     bottom: 0;
     top: 0;
@@ -305,4 +307,62 @@
  .tabs-image img{
     width: 400px;
     height: 230px;
+ }
+ .tabs-address{
+    padding: 16px 24px;
+    flex: auto;
+ }
+ .tabs-address span{
+    font-size: 1.375rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.75rem
+ }
+ .line{
+    border-bottom: 1px solid #e8eaed;
+ }
+ .tabs-app{
+    padding: 10px 22px;
+    flex-wrap: wrap;
+    display: flex;
+ }
+ .tab-app-item{
+    text-align: center;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 0px;
+ }
+ .tab-app-com{
+    width: 100%;
+ }
+ .button-app{
+    background-color: transparent;
+    border: none;
+ }
+ .icon-app{
+    background-color: rgb(26,115,232);
+    border-radius: 36px;
+    cursor: pointer;
+    padding: 7px;
+    color: white;
+    font-size: 25px;
+ }
+ .name-app{
+    color: rgb(26,115,232);
+ }
+ 
+ .address-item{
+    padding-top: 8px;
+    padding-bottom: 8px;
+    display: flex;
+    padding: 12px 24px;
+   
+ }
+ .address-item i{
+    font-size: 28px;
+    display: block;
+    width: 48px;
+    color: rgb(26,115,232);
+ }
+ .address-name{
+    line-height: 30px;
  }

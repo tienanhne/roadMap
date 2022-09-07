@@ -205,7 +205,7 @@ function setOnClickListener() {
     })
 }
 
-function createMarker(latlng, name, address,index, image) {
+function createMarker(latlng, name, address,index, image, pluscode) {
     var html = `
         <div class="store-info-window">
           <div class="store-info-name">
@@ -254,40 +254,60 @@ function createMarker(latlng, name, address,index, image) {
             <img src="${image}" alt="">
         </div>
         <div class="tabs-address">
-            <strong>${name}</strong>
+            <span>${name}</span>
+            
         </div>
-        <div class="direction">
-        <form>
-            <div class="form-group">
-                <i class='bx bx-radio-circle-marked'></i>
-                <div class="col-xs-4">
-                    <input type="text" id="from" placeholder="Origin" class="form-control" value="">
+        <div class="tabs-app">
+                <div class="tab-app-item">
+                    <div class="tab-app-com">
+                        <button class="button-app">
+                            <span class="bx bx-radio-circle-marked icon-app"></span>
+                            <div class="name-app">Đường đi</div>
+                        </button>
+                    </div>
                 </div>
-            </div> 
-            <div class="form-group">
-
-                <label for="to" class="col-xs-2 control-label"><i class='bx bxs-map'></i></label>
-                <div class="col-xs-4">
-                    <input type="text" id="to" placeholder="Destination" class="form-control">
+                <div class="tab-app-item">
+                    <div class="tab-app-com">
+                        <button class="button-app">
+                            <span class="bx bx-save icon-app"></span>
+                            <div class="name-app">Lưu</div>
+                        </button>
+                    </div>
                 </div>
-
+                <div class="tab-app-item">
+                    <div class="tab-app-com">
+                        <button class="button-app">
+                            <span class="bx bxs-phone icon-app"></span>
+                            <div class="name-app">Điện thoại</div>
+                        </button>
+                    </div>
+                </div>
+                <div class="tab-app-item">
+                    <div class="tab-app-com">
+                        <button class="button-app">
+                            <span class="bx bx-share-alt icon-app"></span>
+                            <div class="name-app">Chia sẻ</div>
+                        </button>
+                    </div>
+                </div>
             </div>
-
-        </form>
-        <div id="floating-panel">
-            <b>Mode of Travel: </b>
-            <select id="mode">
-             <option value="" selected>Chọn PT</option>
-              <option value="DRIVING">Driving</option>
-              <option value="WALKING">Đi Bộ</option>
-              <option value="BICYCLING">Đi Xe Đạp</option>
-              <option value="TRANSIT">Transit</option>
-            </select>
-        </div>
-        <div class="btn-group">
-            <button class="btn btn-info btn-lg " onclick="calcRoute()"><i class='bx bx-run'></i></button>
-        </div>
-    </div>
+            <div class="line"></div>
+            <div class="show-address">
+                <div class="address-item-list">
+                    <div class="address-item">
+                        <i class='bx bx-map'></i>
+                        <span class="address-name">${address}</span>
+                    </div>
+                    <div class="address-item">
+                        <i class='bx bxs-phone'></i>
+                        <span class="address-name">fnasdlkjfnjkf</span>
+                    </div>
+                    <div class="address-item">
+                        <i class='bx bx-map-pin' ></i>
+                        <span class="address-name">${pluscode}</span>
+                    </div>
+                </div>
+            </div
     `
     var marker = new google.maps.Marker({
         map: map,
@@ -318,9 +338,9 @@ function showStoresMarkers(stores) {
         var name = store.results[0].address_components[0].long_name;
         var address = store.results[0].formatted_address;
         var image = store.results[0].address_components[0].image;
-
+        var pluscode = store.results[0].place_id;
         bounds.extend(latlng);
-        createMarker(latlng, name, address, index + 1, image);
+        createMarker(latlng, name, address, index + 1, image, pluscode);
     }
     map.fitBounds(bounds);
 }
