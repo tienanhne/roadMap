@@ -303,6 +303,8 @@
     left: 0;
     bottom: 0;
     top: 0;
+   transform: translateX(-100%);
+   transition: transform linear 0.3s;
  }
  .tabs-image img{
     width: 400px;

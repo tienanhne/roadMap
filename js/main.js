@@ -1,12 +1,10 @@
-window.onload = function () {
-
-}
 var map;
 var lati = 0;
 var longi = 0;
 var infowindow;
 var arrMarkers = [];
 var arrMarker = [];
+                     
 
 function timdiadiem(loai) {
     if (!loai || loai == '') return;
@@ -124,6 +122,9 @@ function initMap() {
             title: "Vị trí của bạn",
             mapTypeId: "roadmap",
         })
+        map.addListener("click", function(event) {
+            document.querySelector('.tabs-content').style.transform = "translateX(-100%)"
+        });
         searchStores();
         change(lati, longi)
 
@@ -325,10 +326,12 @@ function createMarker(latlng, name, address,index, image, pluscode) {
         infowindow.setContent(html);
         infowindow.open(map, marker);
         run_place(latlng);
+        document.querySelector('.tabs-content').style.transform = "translateX(0)"
         document.querySelector('.tabs-content').innerHTML = tabsMenu;
     });
     arrMarker.push(marker);
 }
+
 function showStoresMarkers(stores) {
     var bounds = new google.maps.LatLngBounds();
     for (var [index, store] of stores.entries()) {
