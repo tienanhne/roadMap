@@ -64,13 +64,10 @@ function timduong(place) {
         provideRouteAlternatives: true, // chỉ đường ngắn và phù hợp nhất
     }
     service.route(req, function (result, status) {
-        if (status == "OK") {
-            display.setDirections(result)
-            document.getElementById('distances').innerHTML = result.routes[0].legs[0].distance.text
-            document.getElementById('time').innerHTML = result.routes[0].legs[0].duration.text
-            console.log(result)
-            placeDisplay.setMap(null);
+        if (status == google.maps.DirectionsStatus.OK) {
+            display.setDirections(result);
             directionsDisplay.setMap(null);
+            placeDisplay.setMap(null);
         }
     })
 }
@@ -89,9 +86,6 @@ function calcRoute() {
     directionsService.route(request, function (result, status) {
         if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(result);
-            console.log("🚀 ~ file: main.js ~ line 90 ~ result", result)
-            document.getElementById('distances').innerHTML = result.routes[0].legs[0].distance.text
-            document.getElementById('time').innerHTML = result.routes[0].legs[0].duration.text
             placeDisplay.setMap(null);
             display.setMap(null);
         } else {
@@ -125,7 +119,6 @@ function initMap() {
         map.addListener("click", function(event) {
             document.querySelector('.tabs-content').style.transform = "translateX(-100%)"
         });
-        searchStores();
         change(lati, longi)
 
         var options = {
@@ -142,16 +135,13 @@ function initMap() {
 }
 window.initMap = initMap;
 
-
-
-
 function searchStores() {
     var foundStores = [];
-    var zipCode = document.getElementById('zip-code-input').value;
+    var zipCode = document.getElementById('zip-code-input').value.toLowerCase();
     if (zipCode) {
         for (var store of stores) {
-            var postal = store.results[0].address_components[0].long_name;
-            console.log("🚀 ~ file: main.js ~ line 166 ~ searchStores ~ postal", postal)
+            var postal = store.results[0].address_components[0].long_name.toLowerCase();
+            console.log("🚀 ~ file: main.js ~ line 156 ~ searchStores ~ postal", postal)
             if (postal == zipCode) {
                 foundStores.push(store);
             }
@@ -207,35 +197,6 @@ function setOnClickListener() {
 }
 
 function createMarker(latlng, name, address,index, image, pluscode) {
-    var html = `
-        <div class="store-info-window">
-          <div class="store-info-name">
-            ${name}
-          </div>
-          <div class="store-info-address">
-            <div class="circle">
-            <i class='bx bx-map-pin'></i>
-            </div>
-            ${address}
-          </div>
-          <div class="store-info-address">
-            <div class="circle">
-                <i class='bx bx-time-five '></i>
-            </div>
-            <div id="time-five">
-               
-            </div>
-          </div>
-          <div class="store-info-address">
-            <div class="circle">
-            <i class='bx bx-tachometer' ></i>
-            </div>
-            <div id="kilomet">
-               
-            </div>
-          </div>
-        </div>
-    `
     var html2 = `
         <div class="store-info-window">
           <div class="store-info-name">
@@ -256,17 +217,10 @@ function createMarker(latlng, name, address,index, image, pluscode) {
         </div>
         <div class="tabs-address">
             <span>${name}</span>
-            
+    
         </div>
         <div class="tabs-app">
-                <div class="tab-app-item">
-                    <div class="tab-app-com">
-                        <button class="button-app">
-                            <span class="bx bx-radio-circle-marked icon-app"></span>
-                            <div class="name-app">Đường đi</div>
-                        </button>
-                    </div>
-                </div>
+               
                 <div class="tab-app-item">
                     <div class="tab-app-com">
                         <button class="button-app">
@@ -300,8 +254,9 @@ function createMarker(latlng, name, address,index, image, pluscode) {
                         <span class="address-name">${address}</span>
                     </div>
                     <div class="address-item">
-                        <i class='bx bxs-phone'></i>
-                        <span class="address-name">fnasdlkjfnjkf</span>
+                        <i class='bx bx-run'></i>
+                        <span id="kilomet"></span>
+                        <span id="time-five"></span>
                     </div>
                     <div class="address-item">
                         <i class='bx bx-map-pin' ></i>
@@ -323,15 +278,12 @@ function createMarker(latlng, name, address,index, image, pluscode) {
         infowindow.close();
     });
     marker.addListener('click', function () {
-        infowindow.setContent(html);
-        infowindow.open(map, marker);
-        run_place(latlng);
+        run_place(latlng)
         document.querySelector('.tabs-content').style.transform = "translateX(0)"
         document.querySelector('.tabs-content').innerHTML = tabsMenu;
     });
     arrMarker.push(marker);
 }
-
 function showStoresMarkers(stores) {
     var bounds = new google.maps.LatLngBounds();
     for (var [index, store] of stores.entries()) {
@@ -364,10 +316,10 @@ function run_place(latlng){
     placeService.route(req, function(result, status){
         if(status == "OK"){
             placeDisplay.setDirections(result);
-            document.getElementById('kilomet').innerHTML = result.routes[0].legs[0].distance.text;
-            document.getElementById('time-five').innerHTML = result.routes[0].legs[0].duration.text;
             directionsDisplay.setMap(null);
             display.setMap(null);
+            document.getElementById('kilomet').innerHTML = result.routes[0].legs[0].distance.text;
+            document.getElementById('time-five').innerHTML = result.routes[0].legs[0].duration.text;
         }
     })
 }
@@ -380,3 +332,5 @@ async function change(latis, longis) {
     document.querySelector('.city').innerHTML = data.name
     document.querySelector('.status').innerHTML = data.weather[0].description;
 }
+
+

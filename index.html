@@ -16,7 +16,7 @@
 <body>
     <div class="search-container">
         <div class="search">
-            <input type="text" id="zip-code-input" placeholder="Enter Zip" />
+            <input type="text" id="zip-code-input" placeholder="Gợi ý địa điểm" />
             <i class="bx bx-search-alt-2" onclick="searchStores()"></i>
         </div>
     </div>
@@ -32,22 +32,19 @@
         <form>
             <div class="form-group">
                 <i class='bx bx-radio-circle-marked'></i>
-                <div class="col-xs-4">
-                    <input type="text" id="from" placeholder="Origin" class="form-control" value="">
+                <div class="input_form">
+                    <input type="text" id="from" placeholder="Origin" class="form-control">
                 </div>
             </div>
             <div class="form-group">
-
-                <label for="to" class="col-xs-2 control-label"><i class='bx bxs-map'></i></label>
-                <div class="col-xs-4">
+                <label for="to"><i class='bx bxs-map'></i></label>
+                <div class="input_to">
                     <input type="text" id="to" placeholder="Destination" class="form-control">
                 </div>
 
             </div>
-
         </form>
         <div id="floating-panel">
-            <b>Mode of Travel: </b>
             <select id="mode">
                 <option value="" selected>Chọn PT</option>
                 <option value="DRIVING">Driving</option>
@@ -55,10 +52,9 @@
                 <option value="BICYCLING">Đi Xe Đạp</option>
                 <option value="TRANSIT">Transit</option>
             </select>
+            <button class="btn-run" onclick="calcRoute()"><i class='bx bx-run'></i></button>
         </div>
-        <div class="btn-group">
-            <button class="btn btn-info btn-lg " onclick="calcRoute()"><i class='bx bx-run'></i></button>
-        </div>
+        
     </div>
     <div class="tabs-map">
         <div class="tabs-content">
@@ -71,14 +67,6 @@
             </div>
             <div class="line"></div>
             <div class="tabs-app">
-                <div class="tab-app-item">
-                    <div class="tab-app-com">
-                        <button class="button-app">
-                            <span class="bx bx-radio-circle-marked icon-app"></span>
-                            <div class="name-app">Đường đi</div>
-                        </button>
-                    </div>
-                </div>
                 <div class="tab-app-item">
                     <div class="tab-app-com">
                         <button class="button-app">
@@ -138,16 +126,11 @@
         </select>
     </div>
     <div class="weather">
-        <i class='bx bx-x'></i>
         <div id="icon"><img id="wicon" src="" alt="Weather icon"></div>
         <div class="cation">
             <p class="city"></p>
             <p class="status"></p>
         </div>
-    </div>
-    <div class="disnal">
-        <span id="distances"></span>
-        <span id="time"></span>
     </div>
     <script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAet8Mk1nPvOn_AebLE5ZxXoGejOD8tPzA&libraries=places&callback=initMap">
