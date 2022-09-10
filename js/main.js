@@ -101,7 +101,8 @@ function initMap() {
     window.navigator.geolocation.getCurrentPosition(function (pop) { //lấy ra điểm trung tâm
         lati = pop.coords.latitude; // 7,8 lấy ra kinh độ , vĩ độ;
         longi = pop.coords.longitude;
-        map = new google.maps.Map(document.getElementById("map"), { // mục đích để showmap
+        map = new google.maps.Map(document.getElementById("map"), { 
+            mapId: "8e0a97af9386fef",// mục đích để showmap
             center: { lat: lati, lng: longi }, // lấy được vị trí trung tâm
             zoom: 15,
         });
@@ -111,7 +112,7 @@ function initMap() {
                 lng: longi,
             },
             map: map,
-            icon: "02.png",
+            icon: "icon1.png",
             title: "Vị trí của bạn",
             mapTypeId: "roadmap",
         })
@@ -180,6 +181,7 @@ function displayStores() {
                     </div>
                   </div>
                 </div>
+               
               </div>
             `
         document.querySelector('.stores-list').innerHTML = storesHtml;
@@ -332,7 +334,10 @@ async function change(latis, longis) {
     var iconurl = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
     document.querySelector('#wicon').src = iconurl
     document.querySelector('.city').innerHTML = data.name
-    document.querySelector('.status').innerHTML = data.weather[0].description;
+    if(data.weather[0].description == "overcast clouds"){
+        document.querySelector('.status').innerHTML = "trời mưa";
+    }
+    
 }
 
 
