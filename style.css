@@ -28,6 +28,7 @@
     position: absolute;
     top: 5%;
     left: 48%;
+    border-radius: 5px;
  }
 
  .select_map select {
@@ -201,7 +202,7 @@
 
  .direction {
     position: absolute;
-    left: 32%;
+    left: 30%;
      top: 15px;
      z-index: 1000;
  }
@@ -212,12 +213,13 @@
      align-items: center;
     }
     .input_form input, .input_to input{
-        width: 200px;
+        width: 220px;
         padding: 5px;
         border: none;
         box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
         margin-bottom: 5px;
         border-radius: 5px;
+        font-size: 16px;
     }
 
  .btn-run{
@@ -257,6 +259,7 @@
     top: 0;
    transform: translateX(-100%);
    transition: transform linear 0.3s;
+   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
  }
  .tabs-image img{
     width: 400px;

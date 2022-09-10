@@ -99,9 +99,8 @@ function calcRoute() {
 function initMap() {
     infowindow = new google.maps.InfoWindow();
     window.navigator.geolocation.getCurrentPosition(function (pop) { //lấy ra điểm trung tâm
-        lati = parseFloat(pop.coords.latitude); // 7,8 lấy ra kinh độ , vĩ độ;
-        longi = parseFloat(pop.coords.longitude);
-        // document.querySelector('#currentPosition').innerHTML = (lati + ',' + longi)
+        lati = pop.coords.latitude; // 7,8 lấy ra kinh độ , vĩ độ;
+        longi = pop.coords.longitude;
         map = new google.maps.Map(document.getElementById("map"), { // mục đích để showmap
             center: { lat: lati, lng: longi }, // lấy được vị trí trung tâm
             zoom: 15,
@@ -119,8 +118,7 @@ function initMap() {
         map.addListener("click", function(event) {
             document.querySelector('.tabs-content').style.transform = "translateX(-100%)"
         });
-        change(lati, longi)
-
+        change(lati,longi)
         var options = {
             componentRestrictions: { 'country': ['vn'] },
             fields: ['geometry', 'name'],
@@ -196,7 +194,7 @@ function setOnClickListener() {
     })
 }
 
-function createMarker(latlng, name, address,index, image, pluscode) {
+function createMarker(store,latlng, name, address,index, image, pluscode) {
     var html2 = `
         <div class="store-info-window">
           <div class="store-info-name">
@@ -255,8 +253,8 @@ function createMarker(latlng, name, address,index, image, pluscode) {
                     </div>
                     <div class="address-item">
                         <i class='bx bx-run'></i>
-                        <span id="kilomet"></span>
-                        <span id="time-five"></span>
+                        <span id="kilomet"> </span>
+                        <span id="time-five"> </span>
                     </div>
                     <div class="address-item">
                         <i class='bx bx-map-pin' ></i>
@@ -265,10 +263,12 @@ function createMarker(latlng, name, address,index, image, pluscode) {
                 </div>
             </div
     `
+    // const image ="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
     var marker = new google.maps.Marker({
         map: map,
         position: latlng,
         label: index.toString(),
+        icon:"https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
     });
     marker.addListener('mouseover', function () {
         infowindow.setContent(html2); 
@@ -278,7 +278,8 @@ function createMarker(latlng, name, address,index, image, pluscode) {
         infowindow.close();
     });
     marker.addListener('click', function () {
-        run_place(latlng)
+        run_place(latlng);
+        change(store.results[0].geometry.location.lat, store.results[0].geometry.location.lng);
         document.querySelector('.tabs-content').style.transform = "translateX(0)"
         document.querySelector('.tabs-content').innerHTML = tabsMenu;
     });
@@ -295,7 +296,8 @@ function showStoresMarkers(stores) {
         var image = store.results[0].address_components[0].image;
         var pluscode = store.results[0].place_id;
         bounds.extend(latlng);
-        createMarker(latlng, name, address, index + 1, image, pluscode);
+
+        createMarker(store, latlng, name, address, index + 1, image, pluscode);
     }
     map.fitBounds(bounds);
 }
@@ -316,10 +318,10 @@ function run_place(latlng){
     placeService.route(req, function(result, status){
         if(status == "OK"){
             placeDisplay.setDirections(result);
-            directionsDisplay.setMap(null);
-            display.setMap(null);
             document.getElementById('kilomet').innerHTML = result.routes[0].legs[0].distance.text;
             document.getElementById('time-five').innerHTML = result.routes[0].legs[0].duration.text;
+            directionsDisplay.setMap(null);
+            display.setMap(null);
         }
     })
 }
