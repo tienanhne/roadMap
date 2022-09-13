@@ -16,7 +16,7 @@
 <body>
     <div class="search-container">
         <div class="search">
-            <input type="text" id="zip-code-input" placeholder="Gợi ý địa điểm" />
+            <input type="text" id="zip-code-input" placeholder="Click search" />
             <i class="bx bx-search-alt-2" onclick="searchStores()"></i>
         </div>
     </div>
@@ -111,27 +111,27 @@
             </div>
         </div>
     </div>
-    <div class="select_map">
-        <select onchange="timdiadiem(this.value)">
-            <option value="">Chọn địa điểm</option>
-            <option value="cafe">Quán cafe</option>
-            <option value="food">Quán ăn</option>
-            <option value="hospital">Bệnh viện</option>
-            <option value="bank">Ngân hàng</option>
-            <option value="atm">Cây ATM</option>
-            <option value="bus_station">Trạm xe buýt</option>
-            <option value="museum">Bảo tàng</option>
-            <option value="park">Công viên</option>
-            <option value="parking">Chỗ đỗ xe</option>
-        </select>
-    </div>
-    <div class="weather">
-        <div id="icon"><img id="wicon" src="" alt="Weather icon"></div>
-        <div class="cation">
-            <p class="city"></p>
-            <p class="status"></p>
+        <div class="select_map">
+            <select onchange="timdiadiem(this.value)">
+                <option value="" selected>Chọn tiện ích</option>
+                <option value="cafe">Quán cafe</option>
+                <option value="food">Quán ăn</option>
+                <option value="hospital">Bệnh viện</option>
+                <option value="bank">Ngân hàng</option>
+                <option value="atm">Cây ATM</option>
+                <option value="bus_station">Trạm xe buýt</option>
+                <option value="museum">Bảo tàng</option>
+                <option value="park">Công viên</option>
+                <option value="parking">Chỗ đỗ xe</option>
+            </select>
         </div>
-    </div>
+        <div class="weather">
+            <div id="icon"><img id="wicon" src="" alt="Weather icon"></div>
+            <div class="cation">
+                <p class="city"></p>
+                <p class="status"></p>
+            </div>
+        </div>
     <script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAet8Mk1nPvOn_AebLE5ZxXoGejOD8tPzA&libraries=places&callback=initMap">
         </script>

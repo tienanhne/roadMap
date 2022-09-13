@@ -101,8 +101,7 @@ function initMap() {
     window.navigator.geolocation.getCurrentPosition(function (pop) { //lấy ra điểm trung tâm
         lati = pop.coords.latitude; // 7,8 lấy ra kinh độ , vĩ độ;
         longi = pop.coords.longitude;
-        map = new google.maps.Map(document.getElementById("map"), { 
-            mapId: "8e0a97af9386fef",// mục đích để showmap
+        map = new google.maps.Map(document.getElementById("map"), { // mục đích để showmap
             center: { lat: lati, lng: longi }, // lấy được vị trí trung tâm
             zoom: 15,
         });
@@ -112,7 +111,6 @@ function initMap() {
                 lng: longi,
             },
             map: map,
-            icon: "icon1.png",
             title: "Vị trí của bạn",
             mapTypeId: "roadmap",
         })
@@ -148,6 +146,7 @@ function searchStores() {
     } else {
         foundStores = stores;
     }
+    document.querySelector('.stores-list-container').style.opacity = 1;
     clearLocations();
     displayStores(foundStores);
     showStoresMarkers(foundStores);
@@ -217,10 +216,17 @@ function createMarker(store,latlng, name, address,index, image, pluscode) {
         </div>
         <div class="tabs-address">
             <span>${name}</span>
-    
+
         </div>
         <div class="tabs-app">
-               
+                <div class="tab-app-item">
+                    <div class="tab-app-com">
+                        <button class="button-app" onclick = >
+                            <span class="bx bx-save icon-app"></span>
+                            <div class="name-app">Đường đi</div>
+                        </button>
+                    </div>
+                </div>
                 <div class="tab-app-item">
                     <div class="tab-app-com">
                         <button class="button-app">
