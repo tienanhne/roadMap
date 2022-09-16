@@ -70,6 +70,11 @@
      padding: 5px;
      border: none;
  }
+ #modes {
+     width: 100px;
+     padding: 5px;
+     border: none;
+ }
 
  #distances {
      font-size: 25px;
@@ -214,6 +219,12 @@
  .direction {
      position: absolute;
      left: 40%;
+     top: 15px;
+     z-index: 1000;
+ }
+ .directions {
+     position: absolute;
+     left: 23%;
      top: 15px;
      z-index: 1000;
  }

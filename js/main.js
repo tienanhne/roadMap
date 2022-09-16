@@ -4,7 +4,7 @@ var longi = 0;
 var infowindow;
 var arrMarkers = [];
 var arrMarker = [];
-                     
+
 
 function timdiadiem(loai) {
     if (!loai || loai == '') return;
@@ -14,7 +14,7 @@ function timdiadiem(loai) {
             lng: longi,
         }, // trung tâm vùng tìm kiếm
         radius: '3000', //bán kính vùng tìm kiếm
-        type: loai
+        type: loai,
     }
 
     var service = new google.maps.places.PlacesService(map) // dịch vụ tìm kiếm địa điểm
@@ -79,21 +79,46 @@ function calcRoute() {
     directionsDisplay = new google.maps.DirectionsRenderer();
     directionsDisplay.setMap(map);
     var request = {
-        origin: document.getElementById("from").value,
+        origin: { lat: lati, lng: longi },
         destination: document.getElementById("to").value,
         travelMode: google.maps.TravelMode[travelModes],
     }
     directionsService.route(request, function (result, status) {
         if (status == google.maps.DirectionsStatus.OK) {
+            console.log(result)
             directionsDisplay.setDirections(result);
             placeDisplay.setMap(null);
             display.setMap(null);
+
         } else {
             directionsDisplay.setDirections({ routes: [] });
             map.setCenter({ lat: lati, lng: longi });
         }
     });
+}
+function calcRoutes() {
+    const travelModes = document.getElementById("modes").value;
+    let directionsService = new google.maps.DirectionsService();
+    if (directionsDisplay) directionsDisplay.setMap(null);
+    directionsDisplay = new google.maps.DirectionsRenderer();
+    directionsDisplay.setMap(map);
+    var request = {
+        origin: document.getElementById("tu").value,
+        destination: document.getElementById("den").value,
+        travelMode: google.maps.TravelMode[travelModes],
+    }
+    directionsService.route(request, function (result, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            console.log(result)
+            directionsDisplay.setDirections(result);
+            placeDisplay.setMap(null);
+            display.setMap(null);
 
+        } else {
+            directionsDisplay.setDirections({ routes: [] });
+            map.setCenter({ lat: lati, lng: longi });
+        }
+    });
 }
 
 function initMap() {
@@ -103,7 +128,7 @@ function initMap() {
         longi = pop.coords.longitude;
         map = new google.maps.Map(document.getElementById("map"), { // mục đích để showmap
             center: { lat: lati, lng: longi }, // lấy được vị trí trung tâm
-            zoom: 15,
+            zoom: 11,
         });
         var diemtrungtam = new google.maps.Marker({ // tạ0 ra điểm chấm mốc
             position: {
@@ -111,22 +136,25 @@ function initMap() {
                 lng: longi,
             },
             map: map,
+            animation: google.maps.Animation.DROP,
             title: "Vị trí của bạn",
             mapTypeId: "roadmap",
         })
-        map.addListener("click", function(event) {
+        map.addListener("click", function (event) {
             document.querySelector('.tabs-content').style.transform = "translateX(-100%)"
         });
-        change(lati,longi)
+        change(lati, longi)
         var options = {
             componentRestrictions: { 'country': ['vn'] },
             fields: ['geometry', 'name'],
             types: ['establishment']
         }
-        var input1 = document.getElementById("from");
-        var autocomplete1 = new google.maps.places.Autocomplete(input1, options);
         var input2 = document.getElementById("to");
         var autocomplete2 = new google.maps.places.Autocomplete(input2, options);
+        var input3 = document.getElementById("tu");
+        var autocomplete2 = new google.maps.places.Autocomplete(input3, options);
+        var input4 = document.getElementById("den");
+        var autocomplete2 = new google.maps.places.Autocomplete(input4, options);
 
     })
 }
@@ -188,14 +216,14 @@ function displayStores() {
 }
 function setOnClickListener() {
     var storeElements = document.querySelectorAll('.store-container');
-    storeElements.forEach(function(element, index){
-      element.addEventListener('click', function(){
-        new google.maps.event.trigger(arrMarker[index], "click");
-      })
+    storeElements.forEach(function (element, index) {
+        element.addEventListener('click', function () {
+            new google.maps.event.trigger(arrMarker[index], "click");
+        })
     })
 }
 
-function createMarker(store,latlng, name, address,index, image, pluscode) {
+function createMarker(store, latlng, name, address, index, image, pluscode) {
     var html2 = `
         <div class="store-info-window">
           <div class="store-info-name">
@@ -221,7 +249,7 @@ function createMarker(store,latlng, name, address,index, image, pluscode) {
         <div class="tabs-app">
                 <div class="tab-app-item">
                     <div class="tab-app-com">
-                        <button class="button-app" onclick = >
+                        <button id="router" class="button-app" >
                             <span class="bx bx-save icon-app"></span>
                             <div class="name-app">Đường đi</div>
                         </button>
@@ -271,22 +299,22 @@ function createMarker(store,latlng, name, address,index, image, pluscode) {
                 </div>
             </div
     `
-    // const image ="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
     var marker = new google.maps.Marker({
         map: map,
         position: latlng,
         label: index.toString(),
-        icon:"https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+        animation: google.maps.Animation.BOUNCE,
+        icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
     });
     marker.addListener('mouseover', function () {
-        infowindow.setContent(html2); 
-        infowindow.open(map, marker);  
+        infowindow.setContent(html2);
+        infowindow.open(map, marker);
     });
     marker.addListener('mouseout', function () {
         infowindow.close();
     });
     marker.addListener('click', function () {
-        run_place(latlng);
+        run_place(latlng)
         change(store.results[0].geometry.location.lat, store.results[0].geometry.location.lng);
         document.querySelector('.tabs-content').style.transform = "translateX(0)"
         document.querySelector('.tabs-content').innerHTML = tabsMenu;
@@ -312,9 +340,9 @@ function showStoresMarkers(stores) {
 console.log(stores)
 
 var placeDisplay;
-function run_place(latlng){
+function run_place(latlng) {
     var placeService = new google.maps.DirectionsService();
-    if(placeDisplay) placeDisplay.setMap(null);
+    if (placeDisplay) placeDisplay.setMap(null);
     placeDisplay = new google.maps.DirectionsRenderer();
     placeDisplay.setMap(map);
     var req = {
@@ -323,8 +351,8 @@ function run_place(latlng){
         travelMode: "DRIVING",
         provideRouteAlternatives: true,
     }
-    placeService.route(req, function(result, status){
-        if(status == "OK"){
+    placeService.route(req, function (result, status) {
+        if (status == "OK") {
             placeDisplay.setDirections(result);
             document.getElementById('kilomet').innerHTML = result.routes[0].legs[0].distance.text;
             document.getElementById('time-five').innerHTML = result.routes[0].legs[0].duration.text;
@@ -340,10 +368,8 @@ async function change(latis, longis) {
     var iconurl = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
     document.querySelector('#wicon').src = iconurl
     document.querySelector('.city').innerHTML = data.name
-    if(data.weather[0].description == "overcast clouds"){
-        document.querySelector('.status').innerHTML = "trời mưa";
-    }
-    
+    document.querySelector('.status').innerHTML = data.weather[0].description
+
 }
 
 

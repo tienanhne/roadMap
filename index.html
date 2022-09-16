@@ -28,18 +28,57 @@
         </div>
     </div>
     <div id="map"></div>
+
+    <div class="selectInput">
+        <div class="circle">
+            <div class="mine">
+
+            </div>
+            <div class="mine">
+
+            </div>
+        </div>
+    </div>
+    <div class="directions">
+        <form>
+        <div class="form-group">
+            <i class='bx bx-radio-circle-marked'></i>
+            <div class="input_form">
+                <input type="text" id="tu" class="form-control" placeholder="di tu">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="to"><i class='bx bxs-map'></i></label>
+            <div class="input_to">
+                <input type="text" id="den" placeholder="Destination" class="form-control">
+            </div>
+            
+        </div>
+    </form>
+    <div id="floating-panel">
+        <select id="modes">
+            <option value="" selected>Chọn PT</option>
+            <option value="DRIVING">Driving</option>
+            <option value="WALKING">Đi Bộ</option>
+            <option value="BICYCLING">Đi Xe Đạp</option>
+            <option value="TRANSIT">Transit</option>
+        </select>
+        <button class="btn-run" style="background-color: yellow;" onclick="calcRoutes()"><i class='bx bx-run'></i></button>
+    </div>
+    </div> 
+
     <div class="direction">
         <form>
             <div class="form-group">
                 <i class='bx bx-radio-circle-marked'></i>
                 <div class="input_form">
-                    <input type="text" id="from" placeholder="Origin" class="form-control">
+                    <input type="text" id="from" class="form-control" placeholder="Vị trí của bạn" disabled >
                 </div>
             </div>
             <div class="form-group">
                 <label for="to"><i class='bx bxs-map'></i></label>
                 <div class="input_to">
-                    <input type="text" id="to" placeholder="Destination" class="form-control">
+                    <input type="text" id="to" placeholder="Vị trí muốn đến" class="form-control">
                 </div>
 
             </div>
