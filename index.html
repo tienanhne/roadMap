@@ -10,7 +10,7 @@
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="./style.css" />
     <script src="./js/geocode.js"></script>
-    <script src="./js/main.js"></script>
+    <script src="./js/main.js" defer="defer"></script>
 </head>
 
 <body>
@@ -44,13 +44,13 @@
         <div class="form-group">
             <i class='bx bx-radio-circle-marked'></i>
             <div class="input_form">
-                <input type="text" id="tu" class="form-control" placeholder="di tu">
+                <input type="text" id="tu" class="form-control" placeholder="Vị trị bắt đầu">
             </div>
         </div>
         <div class="form-group">
             <label for="to"><i class='bx bxs-map'></i></label>
             <div class="input_to">
-                <input type="text" id="den" placeholder="Destination" class="form-control">
+                <input type="text" id="den" placeholder="Vị trí muốn đến" class="form-control">
             </div>
             
         </div>
@@ -63,16 +63,16 @@
             <option value="BICYCLING">Đi Xe Đạp</option>
             <option value="TRANSIT">Transit</option>
         </select>
-        <button class="btn-run" style="background-color: yellow;" onclick="calcRoutes()"><i class='bx bx-run'></i></button>
+        <button class="btn-run" onclick="calcRoutes()"><i class='bx bx-run'></i></button>
+        <button id="show-location">Vị trí của bạn</button>
     </div>
     </div> 
-
     <div class="direction">
         <form>
             <div class="form-group">
                 <i class='bx bx-radio-circle-marked'></i>
                 <div class="input_form">
-                    <input type="text" id="from" class="form-control" placeholder="Vị trí của bạn" disabled >
+                    <input type="text" placeholder="Vị trí của bạn" class="form-control" disabled>
                 </div>
             </div>
             <div class="form-group">

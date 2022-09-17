@@ -5,6 +5,14 @@ var infowindow;
 var arrMarkers = [];
 var arrMarker = [];
 
+var buttonLoca = document.getElementById('show-location')
+    buttonLoca.addEventListener('click', swapper, false);
+function swapper(){
+    document.querySelector('.direction').style.display = "block";
+    document.querySelector('.directions').style.display = "none";
+};
+
+
 
 function timdiadiem(loai) {
     if (!loai || loai == '') return;
@@ -85,7 +93,6 @@ function calcRoute() {
     }
     directionsService.route(request, function (result, status) {
         if (status == google.maps.DirectionsStatus.OK) {
-            console.log(result)
             directionsDisplay.setDirections(result);
             placeDisplay.setMap(null);
             display.setMap(null);
