@@ -11,8 +11,12 @@ function swapper(){
     document.querySelector('.direction').style.display = "block";
     document.querySelector('.directions').style.display = "none";
 };
-
-
+var buttonLocas = document.getElementById('hide-location')
+    buttonLocas.addEventListener('click', swappers, false);
+function swappers(){
+    document.querySelector('.direction').style.display = "none";
+    document.querySelector('.directions').style.display = "block";
+};
 
 function timdiadiem(loai) {
     if (!loai || loai == '') return;
