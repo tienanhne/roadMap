@@ -4,6 +4,9 @@ var longi = 0;
 var infowindow;
 var arrMarkers = [];
 var arrMarker = [];
+var placeDisplay;
+var display;
+var directionsDisplay;
 
 var buttonLoca = document.getElementById('show-location')
     buttonLoca.addEventListener('click', swapper, false);
@@ -63,7 +66,6 @@ function timdiadiem(loai) {
         }
     });
 }
-var display;
 function timduong(place) {
     var service = new google.maps.DirectionsService();
     if (display) display.setMap(null)
@@ -83,7 +85,6 @@ function timduong(place) {
         }
     })
 }
-var directionsDisplay;
 function calcRoute() {
     const travelModes = document.getElementById("mode").value;
     let directionsService = new google.maps.DirectionsService();
@@ -139,7 +140,7 @@ function initMap() {
         longi = pop.coords.longitude;
         map = new google.maps.Map(document.getElementById("map"), { // mục đích để showmap
             center: { lat: lati, lng: longi }, // lấy được vị trí trung tâm
-            zoom: 11,
+            zoom: 16,
         });
         var diemtrungtam = new google.maps.Marker({ // tạ0 ra điểm chấm mốc
             position: {
@@ -260,7 +261,7 @@ function createMarker(store, latlng, name, address, index, image, pluscode) {
         <div class="tabs-app">
                 <div class="tab-app-item">
                     <div class="tab-app-com">
-                        <button id="router" class="button-app" >
+                        <button id="router" class="button-app">
                             <span class="bx bx-save icon-app"></span>
                             <div class="name-app">Đường đi</div>
                         </button>
@@ -348,9 +349,7 @@ function showStoresMarkers(stores) {
     }
     map.fitBounds(bounds);
 }
-console.log(stores)
 
-var placeDisplay;
 function run_place(latlng) {
     var placeService = new google.maps.DirectionsService();
     if (placeDisplay) placeDisplay.setMap(null);
@@ -379,8 +378,30 @@ async function change(latis, longis) {
     var iconurl = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
     document.querySelector('#wicon').src = iconurl
     document.querySelector('.city').innerHTML = data.name
-    document.querySelector('.status').innerHTML = data.weather[0].description
-
+            if(data.weather[0].description == "clear sky"){
+                data.weather[0].description = "Trời quang"
+            }else if(data.weather[0].description =="few clouds"){
+                data.weather[0].description = "Vài đám mây"
+            }else if(data.weather[0].description == "scattered clouds"){
+                data.weather[0].description = "Mây rải rác"
+            }else if(data.weather[0].description == "broken clouds"){
+                data.weather[0].description = "Mây tan"
+            }else if(data.weather[0].description == "shower rain"){
+                data.weather[0].description = "Mưa rào"
+            }else if(data.weather[0].description == "rain"){
+                data.weather[0].description = "Trời Mưa"
+            }else if(data.weather[0].description == "thunderstorm"){
+                data.weather[0].description = "Có dông"
+            }else if(data.weather[0].description == "snow"){
+                data.weather[0].description = "Có tuyết"
+            }else if(data.weather[0].description == "mist"){
+                data.weather[0].description = "Sương mù"
+            }else if(data.weather[0].description == "light rain"){
+                data.weather[0].description = "Có mưa nhẹ";
+            }else if(data.weather[0].description == "overcast clouds"){
+                data.weather[0].description = "Trời âm u";
+            }
+            document.querySelector('.status').innerHTML = data.weather[0].description
 }
 
 

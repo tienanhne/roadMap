@@ -97,7 +97,7 @@
         
     </div>
     <div class="tabs-map">
-        <div class="tabs-content" title="click vào map để ẩn!">
+        <div class="tabs-content">
             <div class="tabs-image">
                 <img src="./khu-du-lich-buu-long-1_1634199735.jpg" alt="">
             </div>
@@ -151,6 +151,13 @@
             </div>
         </div>
     </div>
+        <div class="weather">
+            <div id="icon"><img id="wicon" src="" alt="Weather icon"></div>
+            <div class="cation">
+                <p class="city"></p>
+                <p class="status"></p>
+            </div>
+        </div>
         <div class="select_map">
             <select onchange="timdiadiem(this.value)">
                 <option value="" selected>Chọn tiện ích</option>
@@ -164,13 +171,6 @@
                 <option value="park">Công viên</option>
                 <option value="parking">Chỗ đỗ xe</option>
             </select>
-        </div>
-        <div class="weather">
-            <div id="icon"><img id="wicon" src="" alt="Weather icon"></div>
-            <div class="cation">
-                <p class="city"></p>
-                <p class="status"></p>
-            </div>
         </div>
     <script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAet8Mk1nPvOn_AebLE5ZxXoGejOD8tPzA&libraries=places&callback=initMap">
