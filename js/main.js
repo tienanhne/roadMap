@@ -315,7 +315,7 @@ function createMarker(store, latlng, name, address, index, image, pluscode) {
         map: map,
         position: latlng,
         label: index.toString(),
-        animation: google.maps.Animation.BOUNCE,
+        // animation: google.maps.Animation.BOUNCE,
         icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
     });
     marker.addListener('mouseover', function () {
@@ -400,6 +400,10 @@ async function change(latis, longis) {
                 data.weather[0].description = "Có mưa nhẹ";
             }else if(data.weather[0].description == "overcast clouds"){
                 data.weather[0].description = "Trời âm u";
+            }else if(data.weather[0].description == "moderate rain"){
+                data.weather[0].description = "Mưa vừa";
+            }else if(data.weather[0].description == "heavy intensity rain"){
+                data.weather[0].description = "Mưa lớn";
             }
             document.querySelector('.status').innerHTML = data.weather[0].description
 }
