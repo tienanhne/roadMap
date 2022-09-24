@@ -20,6 +20,18 @@ function swappers(){
     document.querySelector('.direction').style.display = "none";
     document.querySelector('.directions').style.display = "block";
 };
+var searchs = document.querySelector('.search-box');
+var closebox = document.querySelector('.close-box');
+var inputs = document.querySelector('.search');
+
+searchs.onclick = function(){
+    inputs.classList.add('active')
+}
+closebox.onclick = function(){
+    inputs.classList.remove('active')
+    document.querySelector('.stores-list-container').style.opacity = 0;
+}
+
 
 function timdiadiem(loai) {
     if (!loai || loai == '') return;
@@ -407,5 +419,7 @@ async function change(latis, longis) {
             }
             document.querySelector('.status').innerHTML = data.weather[0].description
 }
+
+
 
 
