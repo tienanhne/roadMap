@@ -47,7 +47,7 @@
  }
 
  .weather .cation .city {
-     font-size: 18px;
+     font-size: 15px;
      font-weight: bold;
      font-family: Arial, Helvetica, sans-serif;
      margin: 0;
@@ -121,7 +121,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.4rem;
+        font-size: 1.5rem;
         cursor: pointer;
  }
  .search-container .search .close-box{
@@ -338,7 +338,7 @@
 
  .tabs-content {
      position: absolute;
-     width: 400px;
+     width: 380px;
      height: 100vh;
      background-color: #fff;
      left: 0;
@@ -388,6 +388,7 @@
  .button-app {
      background-color: transparent;
      border: none;
+     text-decoration: none;
  }
 
  .icon-app {
@@ -418,7 +419,8 @@
  }
 
  .address-name {
-     line-height: 30px;
+     line-height: 25px;
+     overflow: hidden;
  }
 
  #kilomet {
@@ -449,6 +451,9 @@
      font-size: 16px;
      margin-bottom: 6px;
 }
+.address-name {
+    width: 400px;
+}
 .weather {
     padding: 3px;
     display: flex;
@@ -466,13 +471,21 @@
     box-shadow: 0 5px 25px rgb(0 0 0 / 20%);
 }
 .search-container {
-border-radius: 6px;
+    border-radius: 6px;
    position: absolute;
    z-index: 100;
-   top: 20px;
+   top: 19px;
    right: 78px;
-   width: 240px;
-   height: 35px;
+   height: 30px;
+}
+.search-container .search.active{
+    width: 240px;
+}
+.search-container .search .search-box{
+    font-size: 1.5rem;
+}
+.search-container .search .close-box{
+font-size: 1.2rem;
 }
 .stores-list-container {
     width: 240px;
@@ -480,7 +493,7 @@ border-radius: 6px;
     z-index: 100;
     background-color: white;
     right: 78px;
-    top: 59px;
+    top: 70px;
     border-radius: 6px;
     height: 354px;
     display: flex
@@ -530,6 +543,9 @@ border-radius: 6px;
      font-size: 13px;
      margin-bottom: 5px;
 }
+.address-name {
+    width: 300px;
+}
 .weather {
     padding: 2px;
     display: flex;
@@ -552,16 +568,18 @@ border-radius: 6px;
    z-index: 100;
    top: 20px;
    right: 78px;
-   width: 200px;
    height: 30px;
 }
+.search-container .search.active{
+    width: 200px;
+ }
 .stores-list-container {
     width: 200px;
     position: absolute;
     z-index: 100;
     background-color: white;
     right: 78px;
-    top: 59px;
+    top: 70px;
     border-radius: 6px;
     height: 325px;
     display: flex

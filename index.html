@@ -4,9 +4,10 @@
 <head>
     <title>Simple Map</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.min.js"
-        integrity="sha512-8Y8eGK92dzouwpROIppwr+0kPauu0qqtnzZZNEF8Pat5tuRNJxJXCkbQfJ0HlUG3y1HB3z18CSKmUo7i2zcPpg=="
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="./style.css" />
     <script src="./js/geocode.js"></script>
@@ -17,11 +18,11 @@
     <div id="map"></div>
     <div class="search-container">
         <div class="search">
-            <div class="search-box"><i class="bx bx-search-alt-2" onclick="searchStores()"></i></div>
+            <div class="search-box"><i class="bx bx-search-alt-2" onclick="loacation()"></i></div>
             <div class="search-input">
                 <input type="text" id="zip-code-input" placeholder="Tìm địa điểm" />
             </div>
-            
+
             <div class="close-box"><i class='bx bx-x'></i></div>
         </div>
     </div>
@@ -34,32 +35,32 @@
     </div>
     <div class="directions">
         <form>
-        <div class="form-group">
-            <i class='bx bx-radio-circle-marked'></i>
-            <div class="input_form">
-                <input type="text" id="tu" class="form-control" placeholder="Vị trị bắt đầu">
+            <div class="form-group">
+                <i class='bx bx-radio-circle-marked'></i>
+                <div class="input_form">
+                    <input type="text" id="tu" class="form-control" placeholder="Vị trị bắt đầu">
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="to"><i class='bx bxs-map'></i></label>
-            <div class="input_to">
-                <input type="text" id="den" placeholder="Vị trí muốn đến" class="form-control">
+            <div class="form-group">
+                <label for="to"><i class='bx bxs-map'></i></label>
+                <div class="input_to">
+                    <input type="text" id="den" placeholder="Vị trí muốn đến" class="form-control">
+                </div>
+
             </div>
-            
+        </form>
+        <div id="floating-panel">
+            <select id="modes">
+                <option value="" selected>Chọn PT</option>
+                <option value="DRIVING">Driving</option>
+                <option value="WALKING">Đi Bộ</option>
+                <option value="BICYCLING">Đi Xe Đạp</option>
+                <option value="TRANSIT">Transit</option>
+            </select>
+            <button class="btn-run" onclick="calcRoutes()"><i class='bx bx-run'></i></button>
+            <button id="show-location">Vị trí của bạn</button>
         </div>
-    </form>
-    <div id="floating-panel">
-        <select id="modes">
-            <option value="" selected>Chọn PT</option>
-            <option value="DRIVING">Driving</option>
-            <option value="WALKING">Đi Bộ</option>
-            <option value="BICYCLING">Đi Xe Đạp</option>
-            <option value="TRANSIT">Transit</option>
-        </select>
-        <button class="btn-run" onclick="calcRoutes()"><i class='bx bx-run'></i></button>
-        <button id="show-location">Vị trí của bạn</button>
     </div>
-    </div> 
     <div class="direction">
         <form>
             <div class="form-group">
@@ -87,7 +88,7 @@
             <button class="btn-run" onclick="calcRoute()"><i class='bx bx-run'></i></button>
             <button id="hide-location">Chọn vị trí</button>
         </div>
-        
+
     </div>
     <div class="tabs-map">
         <div class="tabs-content">
@@ -96,7 +97,7 @@
             </div>
             <div class="tabs-address">
                 <span>Nha cua toi</span>
-                
+
             </div>
             <div class="line"></div>
             <div class="tabs-app">
@@ -137,34 +138,34 @@
                         <span class="address-name">fnasdlkjfnjkf</span>
                     </div>
                     <div class="address-item">
-                        <i class='bx bx-map-pin' ></i>
+                        <i class='bx bx-map-pin'></i>
                         <span class="address-name">fnasdlkjfnjkf</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-        <div class="weather">
-            <div id="icon"><img id="wicon" src="" alt="Weather icon"></div>
-            <div class="cation">
-                <p class="city"></p>
-                <p class="status"></p>
-            </div>
+    <div class="weather">
+        <div id="icon"><img id="wicon" src="" alt="Weather icon"></div>
+        <div class="cation">
+            <p class="city"></p>
+            <p class="status"></p>
         </div>
-        <div class="select_map">
-            <select onchange="timdiadiem(this.value)">
-                <option value="" selected>Chọn tiện ích</option>
-                <option value="cafe">Quán cafe</option>
-                <option value="food">Quán ăn</option>
-                <option value="hospital">Bệnh viện</option>
-                <option value="bank">Ngân hàng</option>
-                <option value="atm">Cây ATM</option>
-                <option value="bus_station">Trạm xe buýt</option>
-                <option value="museum">Bảo tàng</option>
-                <option value="park">Công viên</option>
-                <option value="parking">Chỗ đỗ xe</option>
-            </select>
-        </div>
+    </div>
+    <div class="select_map">
+        <select onchange="timdiadiem(this.value)">
+            <option value="" selected>Chọn tiện ích</option>
+            <option value="cafe">Quán cafe</option>
+            <option value="food">Quán ăn</option>
+            <option value="hospital">Bệnh viện</option>
+            <option value="bank">Ngân hàng</option>
+            <option value="atm">Cây ATM</option>
+            <option value="bus_station">Trạm xe buýt</option>
+            <option value="museum">Bảo tàng</option>
+            <option value="park">Công viên</option>
+            <option value="parking">Chỗ đỗ xe</option>
+        </select>
+    </div>
     <script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAet8Mk1nPvOn_AebLE5ZxXoGejOD8tPzA&libraries=places&callback=initMap">
         </script>

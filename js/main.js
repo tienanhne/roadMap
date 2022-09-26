@@ -9,14 +9,14 @@ var display;
 var directionsDisplay;
 
 var buttonLoca = document.getElementById('show-location')
-    buttonLoca.addEventListener('click', swapper, false);
-function swapper(){
+buttonLoca.addEventListener('click', swapper, false);
+function swapper() {
     document.querySelector('.direction').style.display = "block";
     document.querySelector('.directions').style.display = "none";
 };
 var buttonLocas = document.getElementById('hide-location')
-    buttonLocas.addEventListener('click', swappers, false);
-function swappers(){
+buttonLocas.addEventListener('click', swappers, false);
+function swappers() {
     document.querySelector('.direction').style.display = "none";
     document.querySelector('.directions').style.display = "block";
 };
@@ -24,15 +24,13 @@ var searchs = document.querySelector('.search-box');
 var closebox = document.querySelector('.close-box');
 var inputs = document.querySelector('.search');
 
-searchs.onclick = function(){
+searchs.onclick = function () {
     inputs.classList.add('active')
 }
-closebox.onclick = function(){
+closebox.onclick = function () {
     inputs.classList.remove('active')
     document.querySelector('.stores-list-container').style.opacity = 0;
 }
-
-
 function timdiadiem(loai) {
     if (!loai || loai == '') return;
     var req = {
@@ -43,7 +41,6 @@ function timdiadiem(loai) {
         radius: '3000', //bán kính vùng tìm kiếm
         type: loai,
     }
-
     var service = new google.maps.places.PlacesService(map) // dịch vụ tìm kiếm địa điểm
     service.nearbySearch(req, function (result, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK && result && result.length > 0) {
@@ -148,8 +145,8 @@ function calcRoutes() {
 function initMap() {
     infowindow = new google.maps.InfoWindow();
     window.navigator.geolocation.getCurrentPosition(function (pop) { //lấy ra điểm trung tâm
-        lati = pop.coords.latitude; // 7,8 lấy ra kinh độ , vĩ độ;
-        longi = pop.coords.longitude;
+        lati = parseFloat(pop.coords.latitude); // 7,8 lấy ra kinh độ , vĩ độ;
+        longi = parseFloat(pop.coords.longitude);
         map = new google.maps.Map(document.getElementById("map"), { // mục đích để showmap
             center: { lat: lati, lng: longi }, // lấy được vị trí trung tâm
             zoom: 16,
@@ -179,32 +176,42 @@ function initMap() {
         var autocomplete2 = new google.maps.places.Autocomplete(input3, options);
         var input4 = document.getElementById("den");
         var autocomplete2 = new google.maps.places.Autocomplete(input4, options);
-
+       
     })
 }
 window.initMap = initMap;
-
-function searchStores() {
+var data;
+async function loacation(){
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "text/plain");  
+    var raw = "{\r\n    \"image\": \"xxx\",  		\r\n    \"color\": \"RED\",  		\r\n    \"weather\": \"snow\",	\r\n    \"temperature\":\"18\",		\r\n    \"day_or_night\": \"MORNING\", 	\r\n    \"day_of_birth\": \"20/2\"  	\r\n}";
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+    data = await fetch("http://14.225.210.47:4999/predict", requestOptions).then(response => response.json()).catch(error => console.log('error', error));
+    console.log(data);
     var foundStores = [];
     var zipCode = document.getElementById('zip-code-input').value.toLowerCase();
     if (zipCode) {
-        for (var store of stores) {
-            var postal = store.results[0].address_components[0].long_name.toLowerCase();
-            console.log("🚀 ~ file: main.js ~ line 156 ~ searchStores ~ postal", postal)
+        for (var store of data) {
+            var postal = store.Name.toLowerCase();
             if (postal == zipCode) {
                 foundStores.push(store);
             }
         }
     } else {
-        foundStores = stores;
+        foundStores = data;
     }
     document.querySelector('.stores-list-container').style.opacity = 1;
     clearLocations();
     displayStores(foundStores);
     showStoresMarkers(foundStores);
     setOnClickListener();
-}
 
+}
 function clearLocations() {
     infowindow.close();
     for (var i = 0; i < arrMarker.length; i++) {
@@ -214,10 +221,11 @@ function clearLocations() {
 }
 function displayStores() {
     var storesHtml = '';
-    for (var [index, store] of stores.entries()) {
-        var address = store.results[0].address_components[0].long_name;
-        var phone = store.results[0].address_components[1].short_name;
-        storesHtml += `
+    for (var [index, store] of data.entries()) {
+        var address = store.Name;
+        var phone = store.ADDRESS;
+        //if(address.includes("Núi")){
+            storesHtml += `
               <div class="store-container">
                 <div class="store-container-background">
                   <div class="store-info-container">
@@ -236,6 +244,10 @@ function displayStores() {
               </div>
             `
         document.querySelector('.stores-list').innerHTML = storesHtml;
+        //}else{
+            //return;
+        //}
+        
     }
 }
 function setOnClickListener() {
@@ -248,7 +260,8 @@ function setOnClickListener() {
 }
 
 function createMarker(store, latlng, name, address, index, image, pluscode) {
-    var html2 = `
+    //if(name.includes("Núi")){
+        var html2 = `
         <div class="store-info-window">
           <div class="store-info-name">
             ${name}
@@ -268,7 +281,8 @@ function createMarker(store, latlng, name, address, index, image, pluscode) {
         </div>
         <div class="tabs-address">
             <span>${name}</span>
-
+            <br>
+            <span>#${store.ID}</span>
         </div>
         <div class="tabs-app">
                 <div class="tab-app-item">
@@ -281,18 +295,18 @@ function createMarker(store, latlng, name, address, index, image, pluscode) {
                 </div>
                 <div class="tab-app-item">
                     <div class="tab-app-com">
-                        <button class="button-app">
+                        <a href = "${pluscode}" class="button-app">
                             <span class="bx bx-save icon-app"></span>
-                            <div class="name-app">Lưu</div>
-                        </button>
+                            <div class="name-app">Mở rộng</div>
+                        </a>
                     </div>
                 </div>
                 <div class="tab-app-item">
                     <div class="tab-app-com">
-                        <button class="button-app">
+                        <a a href="tel:0583507915" class="button-app">
                             <span class="bx bxs-phone icon-app"></span>
                             <div class="name-app">Điện thoại</div>
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <div class="tab-app-item">
@@ -338,25 +352,26 @@ function createMarker(store, latlng, name, address, index, image, pluscode) {
         infowindow.close();
     });
     marker.addListener('click', function () {
-        run_place(latlng)
-        change(store.results[0].geometry.location.lat, store.results[0].geometry.location.lng);
+        run_place(latlng);
+        change(store.lat, store.long);
         document.querySelector('.tabs-content').style.transform = "translateX(0)"
         document.querySelector('.tabs-content').innerHTML = tabsMenu;
     });
     arrMarker.push(marker);
+    //}else{
+     //   return;
+    //}
+    
 }
 function showStoresMarkers(stores) {
     var bounds = new google.maps.LatLngBounds();
     for (var [index, store] of stores.entries()) {
-        var latlng = new google.maps.LatLng(
-            store.results[0].geometry.location.lat,
-            store.results[0].geometry.location.lng);
-        var name = store.results[0].address_components[0].long_name;
-        var address = store.results[0].formatted_address;
-        var image = store.results[0].address_components[0].image;
-        var pluscode = store.results[0].place_id;
+        var latlng = new google.maps.LatLng(store.lat,store.long);
+        var name = store.Name;
+        var address = store.ADDRESS;
+        var image = store.IMG2;
+        var pluscode = store.ADDRESS_LINK;
         bounds.extend(latlng);
-
         createMarker(store, latlng, name, address, index + 1, image, pluscode);
     }
     map.fitBounds(bounds);
@@ -368,7 +383,7 @@ function run_place(latlng) {
     placeDisplay = new google.maps.DirectionsRenderer();
     placeDisplay.setMap(map);
     var req = {
-        origin: { lat: lati, lng: longi },
+        origin: { lat: lati, lng: longi},
         destination: latlng,
         travelMode: "DRIVING",
         provideRouteAlternatives: true,
@@ -387,37 +402,44 @@ function run_place(latlng) {
 async function change(latis, longis) {
     let apiURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latis}&lon=${longis}&appid=677bb5e89a8c0e450ebca93fc6296070`
     let data = await fetch(apiURL).then(response => response.json())
+    console.log("🚀 ~ file: main.js ~ line 405 ~ change ~ data", data)
     var iconurl = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
     document.querySelector('#wicon').src = iconurl
+    
+    if(data.name == "Tinh GJong Nai"){
+        data.name = "Tỉnh Đồng Nai"
+    }
     document.querySelector('.city').innerHTML = data.name
-            if(data.weather[0].description == "clear sky"){
-                data.weather[0].description = "Trời quang"
-            }else if(data.weather[0].description =="few clouds"){
-                data.weather[0].description = "Vài đám mây"
-            }else if(data.weather[0].description == "scattered clouds"){
-                data.weather[0].description = "Mây rải rác"
-            }else if(data.weather[0].description == "broken clouds"){
-                data.weather[0].description = "Mây tan"
-            }else if(data.weather[0].description == "shower rain"){
-                data.weather[0].description = "Mưa rào"
-            }else if(data.weather[0].description == "rain"){
-                data.weather[0].description = "Trời Mưa"
-            }else if(data.weather[0].description == "thunderstorm"){
-                data.weather[0].description = "Có dông"
-            }else if(data.weather[0].description == "snow"){
-                data.weather[0].description = "Có tuyết"
-            }else if(data.weather[0].description == "mist"){
-                data.weather[0].description = "Sương mù"
-            }else if(data.weather[0].description == "light rain"){
-                data.weather[0].description = "Có mưa nhẹ";
-            }else if(data.weather[0].description == "overcast clouds"){
-                data.weather[0].description = "Trời âm u";
-            }else if(data.weather[0].description == "moderate rain"){
-                data.weather[0].description = "Mưa vừa";
-            }else if(data.weather[0].description == "heavy intensity rain"){
-                data.weather[0].description = "Mưa lớn";
-            }
-            document.querySelector('.status').innerHTML = data.weather[0].description
+    if (data.weather[0].description == "clear sky") {
+        data.weather[0].description = "Trời nắng"
+    } else if (data.weather[0].description == "few clouds") {
+        data.weather[0].description = "Vài đám mây"
+    } else if (data.weather[0].description == "scattered clouds") {
+        data.weather[0].description = "Mây rải rác"
+    } else if (data.weather[0].description == "broken clouds") {
+        data.weather[0].description = "Mây tan"
+    } else if (data.weather[0].description == "shower rain") {
+        data.weather[0].description = "Mưa rào"
+    } else if (data.weather[0].description == "rain") {
+        data.weather[0].description = "Trời Mưa"
+    } else if (data.weather[0].description == "thunderstorm") {
+        data.weather[0].description = "Có dông"
+    } else if (data.weather[0].description == "snow") {
+        data.weather[0].description = "Có tuyết"
+    } else if (data.weather[0].description == "mist") {
+        data.weather[0].description = "Sương mù"
+    } else if (data.weather[0].description == "light rain") {
+        data.weather[0].description = "Có mưa nhẹ";
+    } else if (data.weather[0].description == "overcast clouds") {
+        data.weather[0].description = "Trời âm u";
+    } else if (data.weather[0].description == "moderate rain") {
+        data.weather[0].description = "Mưa vừa";
+    } else if (data.weather[0].description == "heavy intensity rain") {
+        data.weather[0].description = "Mưa lớn";
+    } else if (data.weather[0].description == "light intensity shower rain") {
+        data.weather[0].description = "Mưa rào";
+    }
+    document.querySelector('.status').innerHTML = data.weather[0].description
 }
 
 
