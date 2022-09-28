@@ -191,7 +191,6 @@ async function loacation(){
       redirect: 'follow'
     };
     var data = await fetch("http://14.225.210.47:4999/predict", requestOptions).then(response => response.json()).catch(error => console.log('error', error));
-    console.log(data);
     var foundStores = [];
     var zipCode = document.getElementById('zip-code-input').value.toLowerCase();
     if(zipCode){
@@ -210,44 +209,62 @@ async function loacation(){
     setOnClickListener();
 
 }
-// var listdiadiem = document.querySelector('.select-place');
-// var modeldiadiem = document.querySelector('.model-play');
-// listdiadiem.addEventListener('click', function(){
-//     modeldiadiem.style.display = "block"
-// })
-// let modalshow = document.querySelector(".model-select")
-// function hideModal(){
-//     modeldiadiem.style.display = "none";
-// }
-// modeldiadiem.addEventListener('click', hideModal)
-// modalshow.addEventListener('click', function(event){
-//     event.stopPropagation()
-// })
-function selectPlace(data){
-    // let selectPlace = document.querySelector('#select_place');
-    // selectPlace.forEach(function (element,index){
-    //     element.addEventListener('click', function(){
-    //         alert('hello')
-    //     })
-    // })
-    alert('hihi' + data);
- 
+var listdiadiem = document.querySelector('.select-place');
+var modeldiadiem = document.querySelector('.model-play');
+listdiadiem.addEventListener('click', function(){
+    modeldiadiem.style.display = "block"
+})
+let modalshow = document.querySelector(".model-select")
+function hideModal(){
+    modeldiadiem.style.display = "none";
 }
-function selectPlace(data){
-    // let selectPlace = document.querySelector('#select_place');
-    // selectPlace.forEach(function (element,index){
-    //     element.addEventListener('click', function(){
-    //         alert('hello')
-    //     })
-    // })
-    alert('hihi' + data);
- 
+modeldiadiem.addEventListener('click', hideModal)
+modalshow.addEventListener('click', function(event){
+    event.stopPropagation()
+})
+function selectPlace(id, name, local, kilomet, time){
+    var addtr = document.createElement("tr")
+    var trTotal = document.querySelectorAll("tbody tr")
+    for(var i = 0; i < trTotal.length; i++){
+        var productT =document.querySelectorAll(".title")
+        if(productT[i].innerHTML == name){
+            return
+        }          
+    }         
+    var addContent = `<tr>    
+    <td>${id}</td>
+    <td style="display: flex; align-items: center;"><span class="title">${name}</span></td>
+    <td>${local}</td>
+    <td><span>${kilomet}</span> <span>${time}</span></td>
+    <td style="cursor: pointer;"><span class="delete">Xóa</span></td>
+    </tr>`
+    addtr.innerHTML = addContent
+    var cartTable = document.querySelector("tbody")
+    cartTable.append(addtr)
+    deleteItem();
 }
+function deleteItem(){
+    var trTotal = document.querySelectorAll("tbody tr")
+    for(var i = 0; i < trTotal.length; i++){
+        var productX =document.querySelectorAll(".delete")        
+        productX[i].addEventListener("click", function(event){
+            var cartDele = event.target
+            var cartItem = cartDele.parentElement.parentElement 
+            cartItem.remove();
+        })    
+    }
+}
+function totalKm(){
+
+}
+
+
 function clearLocations() {
     infowindow.close();
     for (var i = 0; i < arrMarker.length; i++) {
         arrMarker[i].setMap(null);
     }
+    
     arrMarker.length = 0;
 }
 function displayStores(data) {
@@ -255,28 +272,28 @@ function displayStores(data) {
     for (var [index, store] of data.entries()) {
         var address = store.Name;
         var phone = store.ADDRESS;
-            storesHtml += `
-              <div class="store-container">
+            storesHtml +=  
+            `
+            <div class="store-container">
                 <div class="store-container-background">
                   <div class="store-info-container">
-                    <div class="store-address">
-                      <span>${address}</span>
-                    </div>
+                    <div class="store-address"><span>${address}</span></div>
                     <div class="store-phone-number">${phone}</div>
-                  </div>
-                  <div class="store-number-container">
+                    </div>
+                    <div class="store-number-container">
                     <div class="store-number">
                       ${index + 1}
                     </div>
-                  </div>
-                  </div>
-                  <div>
-                        <button id="select_place" onclick="selectPlace(${store.ID})">Chọn</button>
+                    </div>
+                    </div>
+                    <div>
+                        <button id="select_place" onclick="selectPlace(${store.ID},\`${address}\`,\`${phone}\`)">Chọn</button>
                  </div>
-              </div>
+            </div>
             `
         document.querySelector('.stores-list').innerHTML = storesHtml;  
     }
+
 }
 function setOnClickListener() {
     var storeElements = document.querySelectorAll('.store-container-background');
@@ -354,8 +371,8 @@ function createMarker(store, latlng, name, address, index, image, pluscode) {
                     </div>
                     <div class="address-item">
                         <i class='bx bx-run'></i>
-                        <span id="kilomet"> </span>
-                        <span id="time-five"> </span>
+                        <span class="kilomet"> </span>
+                        <span class="time-five"> </span>
                     </div>
                     <div class="address-item">
                         <i class='bx bx-map-pin' ></i>
@@ -419,8 +436,9 @@ function run_place(latlng) {
     placeService.route(req, function (result, status) {
         if (status == "OK") {
             placeDisplay.setDirections(result);
-            document.getElementById('kilomet').innerHTML = result.routes[0].legs[0].distance.text;
-            document.getElementById('time-five').innerHTML = result.routes[0].legs[0].duration.text;
+            document.querySelector('.kilomet').innerHTML = result.routes[0].legs[0].distance.text;
+            document.querySelector('.time-five').innerHTML = result.routes[0].legs[0].duration.text;
+            
             directionsDisplay.setMap(null);
             display.setMap(null);
         }
