@@ -180,29 +180,27 @@ function initMap() {
     })
 }
 window.initMap = initMap;
-var data;
 async function loacation(){
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "text/plain");  
-    var raw = "{\r\n    \"image\": \"xxx\",  		\r\n    \"color\": \"RED\",  		\r\n    \"weather\": \"snow\",	\r\n    \"temperature\":\"18\",		\r\n    \"day_or_night\": \"MORNING\", 	\r\n    \"day_of_birth\": \"20/2\"  	\r\n}";
+    var raw = "{\r\n    \"image\": \"xxx\",  		\r\n    \"color\": \"RED\",  		\r\n    \"weather\": \"clear sky\",	\r\n    \"temperature\":\"28\",		\r\n    \"day_or_night\": \"NIGHT\", 	\r\n    \"day_of_birth\": \"23/2\"  	\r\n}";
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
       body: raw,
       redirect: 'follow'
     };
-    data = await fetch("http://14.225.210.47:4999/predict", requestOptions).then(response => response.json()).catch(error => console.log('error', error));
+    var data = await fetch("http://14.225.210.47:4999/predict", requestOptions).then(response => response.json()).catch(error => console.log('error', error));
     console.log(data);
     var foundStores = [];
     var zipCode = document.getElementById('zip-code-input').value.toLowerCase();
-    if (zipCode) {
-        for (var store of data) {
-            var postal = store.Name.toLowerCase();
-            if (postal == zipCode) {
-                foundStores.push(store);
+    if(zipCode){
+        let searchdata = data.filter(value => {
+            if(value.Name.toLowerCase().includes(zipCode)){
+                foundStores.push(value);
             }
-        }
-    } else {
+        })
+    }else{
         foundStores = data;
     }
     document.querySelector('.stores-list-container').style.opacity = 1;
@@ -212,6 +210,39 @@ async function loacation(){
     setOnClickListener();
 
 }
+// var listdiadiem = document.querySelector('.select-place');
+// var modeldiadiem = document.querySelector('.model-play');
+// listdiadiem.addEventListener('click', function(){
+//     modeldiadiem.style.display = "block"
+// })
+// let modalshow = document.querySelector(".model-select")
+// function hideModal(){
+//     modeldiadiem.style.display = "none";
+// }
+// modeldiadiem.addEventListener('click', hideModal)
+// modalshow.addEventListener('click', function(event){
+//     event.stopPropagation()
+// })
+function selectPlace(data){
+    // let selectPlace = document.querySelector('#select_place');
+    // selectPlace.forEach(function (element,index){
+    //     element.addEventListener('click', function(){
+    //         alert('hello')
+    //     })
+    // })
+    alert('hihi' + data);
+ 
+}
+function selectPlace(data){
+    // let selectPlace = document.querySelector('#select_place');
+    // selectPlace.forEach(function (element,index){
+    //     element.addEventListener('click', function(){
+    //         alert('hello')
+    //     })
+    // })
+    alert('hihi' + data);
+ 
+}
 function clearLocations() {
     infowindow.close();
     for (var i = 0; i < arrMarker.length; i++) {
@@ -219,12 +250,11 @@ function clearLocations() {
     }
     arrMarker.length = 0;
 }
-function displayStores() {
+function displayStores(data) {
     var storesHtml = '';
     for (var [index, store] of data.entries()) {
         var address = store.Name;
         var phone = store.ADDRESS;
-        //if(address.includes("Núi")){
             storesHtml += `
               <div class="store-container">
                 <div class="store-container-background">
@@ -239,19 +269,17 @@ function displayStores() {
                       ${index + 1}
                     </div>
                   </div>
-                </div>
-               
+                  </div>
+                  <div>
+                        <button id="select_place" onclick="selectPlace(${store.ID})">Chọn</button>
+                 </div>
               </div>
             `
-        document.querySelector('.stores-list').innerHTML = storesHtml;
-        //}else{
-            //return;
-        //}
-        
+        document.querySelector('.stores-list').innerHTML = storesHtml;  
     }
 }
 function setOnClickListener() {
-    var storeElements = document.querySelectorAll('.store-container');
+    var storeElements = document.querySelectorAll('.store-container-background');
     storeElements.forEach(function (element, index) {
         element.addEventListener('click', function () {
             new google.maps.event.trigger(arrMarker[index], "click");
@@ -260,7 +288,6 @@ function setOnClickListener() {
 }
 
 function createMarker(store, latlng, name, address, index, image, pluscode) {
-    //if(name.includes("Núi")){
         var html2 = `
         <div class="store-info-window">
           <div class="store-info-name">
@@ -334,6 +361,10 @@ function createMarker(store, latlng, name, address, index, image, pluscode) {
                         <i class='bx bx-map-pin' ></i>
                         <span class="address-name">${pluscode}</span>
                     </div>
+                    <div class="address-item">
+                    <i class='bx bx-phone'></i>
+                        <span class="address-name">+84583507915</span>
+                    </div>
                 </div>
             </div
     `
@@ -341,7 +372,6 @@ function createMarker(store, latlng, name, address, index, image, pluscode) {
         map: map,
         position: latlng,
         label: index.toString(),
-        // animation: google.maps.Animation.BOUNCE,
         icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
     });
     marker.addListener('mouseover', function () {
@@ -358,9 +388,7 @@ function createMarker(store, latlng, name, address, index, image, pluscode) {
         document.querySelector('.tabs-content').innerHTML = tabsMenu;
     });
     arrMarker.push(marker);
-    //}else{
-     //   return;
-    //}
+  
     
 }
 function showStoresMarkers(stores) {
@@ -405,7 +433,6 @@ async function change(latis, longis) {
     console.log("🚀 ~ file: main.js ~ line 405 ~ change ~ data", data)
     var iconurl = "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
     document.querySelector('#wicon').src = iconurl
-    
     if(data.name == "Tinh GJong Nai"){
         data.name = "Tỉnh Đồng Nai"
     }
