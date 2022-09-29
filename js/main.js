@@ -245,6 +245,7 @@ function selectPlace(id, name, local, kilomet, time){
     var cartTable = document.querySelector("tbody")
     cartTable.append(addtr)
     deleteItem();
+    
 }
 function deleteItem(){
     var trTotal = document.querySelectorAll("tbody tr")
@@ -290,7 +291,7 @@ function displayStores(data) {
                     </div>
                     </div>
                     <div>
-                        <button id="select_place" onclick="selectPlace(${store.ID},\`${address}\`,\`${phone}\`)">Chọn</button>
+                        <button id="select_place">Chọn</button>
                  </div>
             </div>
             `
@@ -334,14 +335,6 @@ function createMarker(store, latlng, name, address, index, image, pluscode) {
         <div class="tabs-app">
                 <div class="tab-app-item">
                     <div class="tab-app-com">
-                        <button id="router" class="button-app">
-                            <span class="bx bx-save icon-app"></span>
-                            <div class="name-app">Đường đi</div>
-                        </button>
-                    </div>
-                </div>
-                <div class="tab-app-item">
-                    <div class="tab-app-com">
                         <a href = "${pluscode}" class="button-app">
                             <span class="bx bx-save icon-app"></span>
                             <div class="name-app">Mở rộng</div>
@@ -358,7 +351,7 @@ function createMarker(store, latlng, name, address, index, image, pluscode) {
                 </div>
                 <div class="tab-app-item">
                     <div class="tab-app-com">
-                        <button class="button-app">
+                        <button class="button-app" onclick="selectPlace(${store.ID},\`${address}\`,\`${name}\`)">
                             <span class="bx bx-share-alt icon-app"></span>
                             <div class="name-app">Chia sẻ</div>
                         </button>
