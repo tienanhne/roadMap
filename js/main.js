@@ -211,6 +211,8 @@ async function loacation(){
 }
 var listdiadiem = document.querySelector('.select-place');
 var modeldiadiem = document.querySelector('.model-play');
+var closes = document.querySelector('.close-boxs');
+closes.addEventListener('click', hideModal)
 listdiadiem.addEventListener('click', function(){
     modeldiadiem.style.display = "block"
 })
@@ -219,6 +221,7 @@ function hideModal(){
     modeldiadiem.style.display = "none";
 }
 modeldiadiem.addEventListener('click', hideModal)
+
 modalshow.addEventListener('click', function(event){
     event.stopPropagation()
 })

@@ -4,11 +4,8 @@
 <head>
     <title>Simple Map</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
-        integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+
     <link rel="stylesheet" type="text/css" href="./style.css" />
     <script src="./js/main.js" defer="defer"></script>
 </head>
@@ -174,26 +171,29 @@
     </div>
     <div class="model-play">
         <div class="model-select">
-            <table>
+            <h2 class="name-table">Danh sách địa điểm đã chọn</h2>
+            <div class="close-boxs"><i class='bx bx-x'></i></div>
+            <div class="line"></div>
+            <table class="tables">
                 <thead>
                     <tr>
                         <th>STT</th>
-                        <th>Ten dia diem</th>
-                        <th>dia chi</th>
-                        <th>time</th>
+                        <th>Tên địa điểm</th>
+                        <th>Địa chỉ</th>
+                        <th>Thời gian</th>
                         <th>Chọn</th>
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                 </tbody>
             </table>
-            <div style="text-align: right;" class="price-total">
+            <!-- <div style="text-align: right;" class="price-total">
                 <p style="font-weight: bold;">Tổng so km: <span id="kilom">230km</span> di trong vong: <span id="time">4 tieng 20p</span></p>
-            </div>
+            </div> -->
         </div>
     </div>
-
+    
     <script async
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAet8Mk1nPvOn_AebLE5ZxXoGejOD8tPzA&libraries=places&callback=initMap">
         </script>
