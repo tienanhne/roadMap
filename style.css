@@ -453,10 +453,6 @@
      height: 80%;
      position: relative;
      padding: 20px;
-     -webkit-animation-name: animatetop;
-     -webkit-animation-duration: 0.4s;
-     animation-name: animatetop;
-     animation-duration: 0.4s
  }
 
  .model-select .close-boxs {
@@ -466,13 +462,17 @@
      font-size: 2.2rem;
      cursor: pointer;
  }
-
+ .model-select .close-boxs:hover{
+    color: red;
+ }
  .select-places {
      position: absolute;
      top: 80px;
-     right: 43%;
+     right: 44%;
  }
-
+ .name-table{
+    color: #0563af;
+ }
  .select-places button {
      padding: 7px;
      border: none;
@@ -484,12 +484,29 @@
  .tables {
      width: 100%;
  }
-
+ .deleteds{
+    padding: 5px;
+    border: none;
+    width: 50px;
+    color: red;
+    cursor: pointer;
+ }
  .tables th,
  .tables td {
-     padding: 8px;
+    padding: 7px;
  }
-
+ .tables th{
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-align: left;
+    background-color: #727dfb;
+    color: white;
+    
+ }
+ .delete{
+    color: red;
+    cursor: pointer;
+ }
  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
      .model-select {
          width: 70%;
@@ -504,7 +521,39 @@
          animation-name: animatetop;
          animation-duration: 0.4s
      }
-
+     .showmenu{
+        position: absolute;
+        z-index: 100000;
+        height: 40px;
+        top: 52px;
+        width: 40px;
+        left: 68px;
+        
+    }
+    .showmenu i{
+        font-size: 33px;
+        background-color: #fff;
+        padding: 8px;
+        cursor: pointer;
+    }
+     .hidemenu{
+        position: absolute;
+        z-index: 100000;
+        height: 40px;
+        top: 52px;
+        width: 40px;
+        left: 68px;
+        display: none;
+    }
+    .hidemenu i{
+        font-size: 33px;
+        background-color: #fff;
+        padding: 8px;
+        cursor: pointer;
+    }
+    .menushow{
+        display: none;
+    }
      .model-select .close-boxs {
          position: absolute;
          top: 10px;
@@ -516,7 +565,7 @@
      .select-places {
          position: absolute;
          top: 124px;
-         right: 53%;
+         right: 57%;
      }
 
      .select-places button {
@@ -538,7 +587,7 @@
 
      .direction {
          position: absolute;
-         left: 21%;
+         left: 18%;
          top: 15px;
          z-index: 1000;
          display: none;
@@ -546,7 +595,7 @@
 
      .directions {
          position: absolute;
-         left: 21%;
+         left: 18%;
          top: 15px;
          z-index: 1000;
 
@@ -574,14 +623,14 @@
          justify-content: center;
          position: absolute;
          background-color: #727dfb;
-         left: 53%;
+         left: 47%;
          top: 0;
      }
 
      .select_map {
          position: absolute;
-         top: 11.5%;
-         left: 48%;
+         top: 10.5%;
+         left: 44%;
          box-shadow: 0 5px 25px rgb(0 0 0 / 20%);
      }
 
@@ -687,6 +736,7 @@
      .tables td {
          padding: 8px;
      }
+     
 
      .direction {
          position: absolute;

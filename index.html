@@ -29,70 +29,6 @@
             </div>
         </div>
     </div>
-    <div class="directions">
-        <form>
-            <div class="form-group">
-                <i class='bx bx-radio-circle-marked'></i>
-                <div class="input_form">
-                    <input type="text" id="tu" class="form-control" placeholder="Vị trị bắt đầu">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="to"><i class='bx bxs-map'></i></label>
-                <div class="input_to">
-                    <input type="text" id="den" placeholder="Vị trí muốn đến" class="form-control">
-                </div>
-
-            </div>
-        </form>
-        <div id="floating-panel">
-            <select id="modes">
-                <option value="" selected>Chọn PT</option>
-                <option value="DRIVING">Xe Máy</option>
-                <option value="WALKING">Đi Bộ</option>
-                <option value="BICYCLING">Đi Xe Đạp</option>
-                <option value="TRANSIT">Tàu Lửa</option>
-            </select>
-            <button class="btn-run" onclick="calcRoutes()"><i class='bx bx-run'></i></button>
-            <button id="show-location">Vị trí của bạn</button>
-        </div>
-    </div>
-    <div class="direction">
-        <form>
-            <div class="form-group">
-                <i class='bx bx-radio-circle-marked'></i>
-                <div class="input_form">
-                    <input type="text" placeholder="Vị trí của bạn" class="form-control" disabled>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="to"><i class='bx bxs-map'></i></label>
-                <div class="input_to">
-                    <input type="text" id="to" placeholder="Vị trí muốn đến" class="form-control">
-                </div>
-
-            </div>
-        </form>
-        <div id="floating-panel">
-            <select id="mode">
-                <option value="" selected>Chọn PT</option>
-                <option value="DRIVING">Xe Máy</option>
-                <option value="WALKING">Đi Bộ</option>
-                <option value="BICYCLING">Đi Xe Đạp</option>
-                <option value="TRANSIT">Tàu Lửa</option>
-            </select>
-            <button class="btn-run" onclick="calcRoute()"><i class='bx bx-run'></i></button>
-            <button id="hide-location">Chọn vị trí</button>
-        </div>
-
-    </div>
-    <div class="tabs-map">
-        <div class="tabs-content">
-            
-                
-           
-        </div>
-    </div>
     <div class="weather">
         <div id="icon"><img id="wicon" src="" alt="Weather icon"></div>
         <div class="cation">
@@ -100,26 +36,99 @@
             <p class="status"></p>
         </div>
     </div>
+    <div class="showmenu">
+        <i class='bx bx-menu'></i>
+    </div>
+    <div class="hidemenu">
+        <i class='bx bx-x' ></i>
+    </div>
+    <div class="menushow">
+        <div class="directions">
+        <form>
+            <div class="form-group">
+                <i class='bx bx-radio-circle-marked'></i>
+                <div class="input_form">
+                    <input type="text" id="tu" class="form-control" placeholder="Start position">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="to"><i class='bx bxs-map'></i></label>
+                <div class="input_to">
+                    <input type="text" id="den" placeholder="End position" class="form-control">
+                </div>
+
+            </div>
+        </form>
+        <div id="floating-panel">
+            <select id="modes">
+                <option value="" selected>Select</option>
+                <option value="DRIVING">DRIVING</option>
+                <option value="WALKING">WALKING</option>
+                <option value="BICYCLING">BICYCLING</option>
+                <option value="TRANSIT">TRANSIT</option>
+            </select>
+            <button class="btn-run" onclick="calcRoutes()"><i class='bx bx-run'></i></button>
+            <button id="show-location">Your position</button>
+        </div>
+    </div>
+    <div class="direction">
+        <form>
+            <div class="form-group">
+                <i class='bx bx-radio-circle-marked'></i>
+                <div class="input_form">
+                    <input type="text" placeholder="Your position" class="form-control" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="to"><i class='bx bxs-map'></i></label>
+                <div class="input_to">
+                    <input type="text" id="to" placeholder="End position" class="form-control">
+                </div>
+
+            </div>
+        </form>
+        <div id="floating-panel">
+            <select id="mode">
+                <option value="" selected>Select</option>
+                <option value="DRIVING">DRIVING</option>
+                <option value="WALKING">WALKING</option>
+                <option value="BICYCLING">BICYCLING</option>
+                <option value="TRANSIT">TRANSIT</option>
+            </select>
+            <button class="btn-run" onclick="calcRoute()"><i class='bx bx-run'></i></button>
+            <button id="hide-location">Choose a location</button>
+        </div>
+
+    </div>
     <div class="select-places">
-        <button class="select-place">danh sách địa điểm</button>
+        <button class="select-place">List of places</button>
     </div>
     <div class="select_map">
         <select onchange="timdiadiem(this.value)">
-            <option value="" selected>Chọn tiện ích</option>
-            <option value="cafe">Quán cafe</option>
-            <option value="restaurant">Quán ăn</option>
-            <option value="store">Cửa hàng</option>
-            <option value="gas_station">Cây xăng</option>
-            <option value="bank">Ngân hàng</option>
-            <option value="drugstore">Hiệu thuốc</option>
-            <option value="hospital">Bệnh viện</option>
-            <option value="atm">Cây ATM</option>
-            <option value="bus_station">Trạm xe buýt</option>
-            <option value="museum">Bảo tàng</option>
-            <option value="park">Công viên</option>
-            <option value="campground">Khu cắm trại</option>
-            <option value="parking">Chỗ đỗ xe</option>
+            <option value="" selected>Choose a widget</option>
+            <option value="cafe">Cafe</option>
+            <option value="restaurant">Restaurant</option>
+            <option value="store">Store</option>
+            <option value="gas_station">Gas</option>
+            <option value="bank">Bank</option>
+            <option value="drugstore">Drugstore</option>
+            <option value="hospital">Hospital</option>
+            <option value="atm">ATM</option>
+            <option value="bus_station">Bus Stationt</option>
+            <option value="museum">Mseum</option>
+            <option value="park">Park</option>
+            <option value="campground">Campgroundi</option>
+            <option value="parking">Parking</option>
         </select>
+    </div>
+    </div>
+    
+    <div class="tabs-map">
+        <div class="tabs-content">
+            
+                
+           
+        </div>
     </div>
     <div class="model-play">
         <div class="model-select">
@@ -130,19 +139,20 @@
                 <thead>
                     <tr>
                         <th>STT</th>
-                        <th>Tên địa điểm</th>
-                        <th>Địa chỉ</th>
-                        <th>Thời gian</th>
-                        <th>Chọn</th>
+                        <th>Place</th>
+                        <th>Location</th>
+                        <th>Kilomet</th>
+                        <th>Time</th>
+                        <th>Choose</th>
                     </tr>
                 </thead>
-                <tbody>
-                    
+                <tbody id="mylist">
+                   
                 </tbody>
             </table>
-            <!-- <div style="text-align: right;" class="price-total">
-                <p style="font-weight: bold;">Tổng so km: <span id="kilom">230km</span> di trong vong: <span id="time">4 tieng 20p</span></p>
-            </div> -->
+            <div style="text-align: right;" class="price-total">
+                <p style="font-weight: bold;">Tổng số km và thời gian cho chuyến đi là: <span id="kilometer">2</span>Km và hết <span id="timerun">1</span>giờ <span id="timephut">2</span>phút</p>
+            </div>
         </div>
     </div>
     
